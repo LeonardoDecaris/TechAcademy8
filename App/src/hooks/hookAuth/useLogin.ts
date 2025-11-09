@@ -1,0 +1,136 @@
+import { useState, useCallback } from "react";
+
+import { useForm } from "react-hook-form";
+import http from "@/src/service/httpAxios";
+import { useAuth } from "@/src/context/AuthContext";
+
+import { validarEmail } from "@/src/utils/Validacao";
+import { useNavigation } from "@react-navigation/native";
+import { RootStackParamList } from "@/src/navigation/Routes";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+
+type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
+
+interface MapLogin {
+	email: string;
+	password: string;
+}
+
+/**
+ * Custom hook to manage user login form and submission.
+ * @returns An object containing form control, submission handlers, and notification state.
+ */
+function useLogin() {
+	const navigation = useNavigation<NavigationProp>();
+
+	const { login } = useAuth();
+	const { control, handleSubmit, formState: { errors } } = useForm<MapLogin>({ mode: "onSubmit" });
+
+	const [mensage, setMensage] = useState("");
+	const [success, setSuccess] = useState("");
+	const [failedAttempts, setFailedAttempts] = useState(0);
+	const [successVisible, setSuccessVisible] = useState(false);
+	const [lockUntil, setLockUntil] = useState<number | null>(null);
+
+	const [isDisabled, setDisabled] = useState(false);
+
+	const navigateToHome = useCallback(() => { navigation.navigate("MainTabs"); }, [navigation]);
+
+	const closeSuccessNotification = useCallback(() => {
+		setSuccessVisible(false);
+		if (success === "success") {
+			navigateToHome();
+		}
+	}, [success, navigateToHome]);
+
+
+	const handleLogin = useCallback(
+		async (data: MapLogin) => {
+			setDisabled(true);
+			setSuccess("loading");
+			setMensage("Carregando dados");
+			setSuccessVisible(true);
+
+			if (lockUntil && Date.now() < lockUntil) {
+				const remainingMs = lockUntil - Date.now();
+				const seconds = Math.ceil(remainingMs / 1000);
+				setSuccessVisible(false);
+				setTimeout(() => {
+					setSuccess("error");
+					setMensage(`Muitas tentativas de login. Tente novamente em ${seconds} segundos.`);
+					setSuccessVisible(true);
+				}, 300);
+				setDisabled(false);
+				return;
+			}
+
+			try {
+				const response = await http.post("login", {
+					email: data.email,
+					password: data.password,
+				});
+
+				const { token } = response.data;
+				login(token);
+
+				setFailedAttempts(0);
+				setLockUntil(null);
+
+				setSuccessVisible(false);
+				setTimeout(() => {
+					setSuccess("success");
+					setMensage(response?.data?.message ?? "Login realizado com sucesso");
+					setSuccessVisible(true);
+				}, 300);
+
+			} catch (error: any) {
+				const attempts = failedAttempts + 1;
+				setFailedAttempts(attempts);
+
+				setSuccessVisible(false);
+				setTimeout(() => {
+					setSuccess("error");
+					if (attempts >= 5) {
+						const until = Date.now() + 1 * 60 * 1000;
+						setLockUntil(until);
+						setMensage("Muitas tentativas de login. Tente novamente em 1 minuto.");
+					} else {
+						const serverMessage = error?.response?.data?.message as string | undefined;
+						setMensage(serverMessage ?? "Erro ao fazer login. Tente novamente.");
+					}
+					setSuccessVisible(true);
+				}, 300);
+
+				console.log("Login error:", error);
+			} finally {
+				setDisabled(false);
+			}
+		},
+		[failedAttempts, lockUntil, login, navigateToHome]
+	);
+
+	const rules = {
+		email: {
+			required: "Email é obrigatório",
+			validate: validarEmail,
+		},
+		password: {
+			required: "Senha é obrigatória",
+		},
+	};
+
+	return {
+		rules,
+		control,
+		errors,
+		success,
+		isDisabled,
+		handleLogin,
+		handleSubmit,
+		mensage,
+		successVisible,
+		closeSuccessNotification,
+	};
+}
+
+export default useLogin;

@@ -1,0 +1,54 @@
+import { Text, TouchableOpacity, View } from "react-native";
+import CardCargo from "./CardCargo";
+
+import { RootStackParamList } from '@/src/navigation/Routes';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
+type NavigationProp = NativeStackNavigationProp<RootStackParamList>
+
+interface Props {
+    motorista?: string;
+    nome?: string;
+    tipo?: string;
+    peso?: string;
+    saida?: string;
+    destino?: string;
+    logoEmpresa?: string;
+    imagemCarga?: string;
+    valorFrete?: string;
+    saidaHora?: string;
+    onPress?: () => void;
+}
+
+const CardMyContract = (props: Props) => {
+
+    return (
+        <View className="w-full p-2.5 bg-gray-100 rounded-2xl "  >
+            <View className="pl-2.5 py-2.5">
+                <Text className="text-lg font-bold">Contrato atual</Text>
+
+                <Text className="text-sm font-medium">
+                    Motorista: <Text className="text-black font-normal">{props.motorista}</Text>
+                </Text>
+
+                <Text className="text-sm font-medium">
+                    Horário de partida: <Text className="text-black font-normal">{props.saidaHora}</Text>
+                </Text>
+            </View>
+            <TouchableOpacity onPress={props.onPress}>
+                <CardCargo
+                    nome={props.nome}
+                    tipo={props.tipo}
+                    peso={props.peso}
+                    saida={props.saida}
+                    destino={props.destino}
+                    logoEmpresa={props.logoEmpresa}
+                    imagemCarga={props.imagemCarga}
+                    valorFrete={props.valorFrete}
+                />
+            </TouchableOpacity>
+        </View>
+    );
+}
+
+export default CardMyContract;
