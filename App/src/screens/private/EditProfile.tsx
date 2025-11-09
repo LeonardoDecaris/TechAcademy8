@@ -29,11 +29,11 @@ const actionsRowStyle = 'w-full flex-row gap-4 my-[20px]';
 const EditProfile = () => {
 
     const navigation = useNavigation<NavigationProp>();
-    const { iniciasNomeUsuario, userData, getUserData } = useGetUserData();
-    const { control, handleSubmit, rules, setValue, handleEditar, notificationVisible, closeNotification, message, status, loading: saving } = useEditarUsuario();
-
     const { uploadImage, loading, statusSuccess } = useImageUser();
+    const { iniciasNomeUsuario, userData, getUserData } = useGetUserData();
+    
     const { updateImage, loadingUpdate, statusSuccessUpdate } = useEditImageUser();
+    const { control, handleSubmit, rules, setValue, handleEditar, notificationVisible, closeNotification, message, status, loading: saving } = useEditarUsuario();
 
     const savingLabel = useMemo(() => saving ? 'Salvando...' : 'Salvar', [saving]);
     const disableSave = useMemo(() => saving || loading || loadingUpdate, [saving, loading, loadingUpdate]);
