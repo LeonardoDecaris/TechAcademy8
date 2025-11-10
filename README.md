@@ -1,4 +1,4 @@
-# TechAcademy7
+# TechAcademy8
 
 Projeto escolar com:
 - backEnd: Node.js + Express + Sequelize + MySQL
