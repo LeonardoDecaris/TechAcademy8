@@ -12,12 +12,12 @@ import {
     SheetTrigger,
 } from "@/components/ui/sheet"
 
-export default function BarraLateral() {
+export default function     BarraLateral() {
     return (
         <Sheet>
 
             <SheetTrigger asChild>
-                <Button variant="outline">Open</Button>
+                <Button variant="outline" className="rounded-sm">Menu</Button>
             </SheetTrigger>
 
             <SheetContent>

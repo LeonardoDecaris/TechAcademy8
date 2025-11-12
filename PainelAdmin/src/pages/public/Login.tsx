@@ -12,21 +12,32 @@ const STYLE = {
 
 function Login() {
 
-  const { control, handleLogin, handleSubmit, rules, errors} = useHookLogin();
-  
+  const { control, handleLogin, handleSubmit, rules, errors, loading } = useHookLogin();
+
   return (
     <main className={STYLE.main}>
       <section className={STYLE.section}>
         <form className={STYLE.form} onSubmit={handleSubmit(handleLogin)}>
           <h3 className={STYLE.h3}>LOGIN</h3>
 
-          <InputCustom name="email" label="Email" id="email" type="email" placeholder="exemplo@exemplo.com" control={control} rules={rules.email} error={errors.email?.message} />
-          <InputCustom name="password" label="Password" id="password" type="password" placeholder="Password" control={control} rules={rules.password} error={errors.password?.message} />
+          <InputCustom 
+            name="email"
+            label="Email"
+            id="email"
+            type="email"
+            placeholder="exemplo@exemplo.com" control={control} rules={rules.email} error={errors.email?.message} />
+          <InputCustom 
+          name="password" label="Password" id="password" type="password" placeholder="Password" control={control} rules={rules.password} error={errors.password?.message} />
 
-          <Button type="submit" className="text-[1.2rem] py-1">Login</Button>
+          <Button type="submit" className="text-[1.2rem] py-1 rounded-md">Login</Button>
         </form>
+          {loading === true ? (
+            <div className="flex justify-center items-center mt-2 bg-gray-200 p-2 rounded-md">
+              <span>Carregando Dados espere!!</span>
+            </div>
+          ) : null}
       </section>
-    </main>
+    </main >
   );
 }
 

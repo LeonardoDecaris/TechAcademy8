@@ -94,7 +94,6 @@ const EditProfile = () => {
         });
     }, [userData, setValue]);
 
-
     useEffect(() => {
         getUserData();
     }, [getUserData]);

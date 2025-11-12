@@ -8,6 +8,7 @@ declare global {
         id: number;
         name: string;
         email: string;
+        admin: boolean;
       };
     }
   }
@@ -24,8 +25,7 @@ export const authMiddleware = (
     return res.status(401).json({ message: "Token não fornecido" });
   }
 
-  const token = authHeader.split(' ')[1];
-
+  const token = authHeader.split(" ")[1];
   if (!token) {
     return res.status(401).json({ message: "Token mal formatado" });
   }
@@ -33,16 +33,27 @@ export const authMiddleware = (
   try {
     const decoded = verifyToken(token);
     if (!decoded.user) {
-      return res.status(403).json({
-        message: "Acesso negado. Usuário não autenticado."
-      });
+      return res.status(403).json({ message: "Acesso negado. Usuário não autenticado." });
     }
     req.user = decoded.user;
     next();
   } catch (error) {
-    return res.status(401).json({ 
+    return res.status(401).json({
       message: "Token inválido",
-      error: error instanceof Error ? error.message : 'Unknown error'
+      error: error instanceof Error ? error.message : "Unknown error",
     });
   }
+};
+
+export const requireAdmin = (
+  req: Request, 
+  res: Response, 
+  next: NextFunction
+) => {
+  return authMiddleware(req, res, () => {
+    if (!req.user?.admin) {
+      return res.status(403).json({ message: "Acesso negado. Permissão de administrador necessária" });
+    }
+    next();
+  });
 };
