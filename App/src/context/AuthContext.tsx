@@ -5,7 +5,7 @@ import { jwtDecode } from "jwt-decode";
 interface TokenPayload {
     id_usuario: string;
     nome: string;
-    user?: { id_usuario: string; nome: string; }
+    user?: { id_usuario: string; nome: string;}
 }
 
 interface AuthContextType {

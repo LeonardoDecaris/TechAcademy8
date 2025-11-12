@@ -992,6 +992,9 @@ components:
         imagemUsuario_id:
           type: integer
           example: 1
+        admin:
+          type: boolean
+          example: true
 
     Empresa:
       type: object
