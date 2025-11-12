@@ -37,8 +37,6 @@ export const authMiddleware = (
   try {
     const decoded = verifyToken(token);
 
-    console.log('Decoded token:', decoded);
-
     if (!decoded.id_usuario) {
       return res.status(403).json({ message: "Acesso negado. Usuário não autenticado." });
     }
@@ -90,7 +88,6 @@ export const authMiddlewareUserOrAdmin = ({id_usuario}: {id_usuario: string}) =>
     const isAdmin = Boolean(req.user?.admin);
     const isIdToken = Number(req.user?.id);
     const isIdParam = Number(req.params[id_usuario]);
-    console.log('isIdToken:', isIdToken, 'isIdParam:', isIdParam);
 
     if (!isIdParam) {
       return res.status(401).json({ mensage: "Chave enviada é invalido" });
