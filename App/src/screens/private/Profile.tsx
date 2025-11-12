@@ -30,8 +30,8 @@ const Profile = () => {
 	const insets = useSafeAreaInsets();
 	const containerStyle = useMemo(() => ({ flex: 1, backgroundColor: '#FFFFFF', paddingHorizontal: 10, paddingTop: insets.top + 10 }), [insets.top]);
 
-	const { logout } = useAuth();
-	const navigation = useNavigation<NavigationProp>()
+	const { logout, userAdmin } = useAuth();
+	const navigation = useNavigation<NavigationProp>();
 
 	const { deleteUsuario } = useDeleteUsuario();
 	const [loggingOut, setLoggingOut] = useState(false);
@@ -101,6 +101,9 @@ const Profile = () => {
 						<AcessoRapidoPerfil titulo='Cadastrar veiculo' tipo='truck' onPress={goRegisterVehicle} />
 					)}
 					<AcessoRapidoPerfil titulo='Cancelar meu Cadastro' loginOut tipo='user-edit' onPress={() => setDeletingAccount(true)} />
+					{userAdmin === true && (
+						<AcessoRapidoPerfil titulo='Area do admin' tipo='' onPress={() => {}} />
+					)}
 				</View>
 
 				<Text className={sectionTitleStyle}>Funcionamento do sistema</Text>

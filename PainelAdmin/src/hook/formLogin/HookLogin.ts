@@ -3,66 +3,68 @@ import { validateEmail, validatePasswordLogin } from "../../lib/validacoesForm";
 import { useNavigate } from "react-router-dom";
 import http from "@/server/http";
 import { useAuth } from "@/context/AuthContext";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
-interface dadosForm {
+interface LoginForm {
   email: string;
   password: string;
 }
 
+interface LoginResponse {
+  token: string;
+  message?: string;
+  mensagem?: string;
+}
 
 function useHookLogin() {
-  const { control, handleSubmit, formState: { errors } } = useForm<dadosForm>({
-    mode: "onSubmit",
+
+  const { control, handleSubmit, formState: { errors } } = useForm<LoginForm>({
     defaultValues: { email: "", password: "" },
   });
 
-  const navigate = useNavigate();
   const { login } = useAuth();
-
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = async (data: dadosForm) => {
+  const handleLogin = useCallback(async (formData: LoginForm): Promise<LoginResponse> => {
     setLoading(true);
     try {
-      const response = await http.post("login", {
-        email: data.email,
-        password: data.password,
-      });
+      const { data } = await http.post<LoginResponse>("login", formData);
 
-      const token = response.data.token;
-      console.log('token recebido', token);
-      login(token);
+      if (!data?.token) {
+        throw { message: "Token ausente na resposta." };
+      }
 
-      setLoading(false);
+      login(data.token);
       navigate("/home");
+
+      return data;
     } catch (error) {
-      console.error(error);
+      throw error;
+    } finally {
       setLoading(false);
-      console.log('erro ao realizar o login', error)
-      alert('Erro ao tentar realizar o login');
     }
-  }
+  }, [login, navigate]);
 
   const rules = {
     email: {
       required: "Email é obrigatório",
-      validate: validateEmail,
+      validate: validateEmail
     },
     password: {
       required: "Senha é obrigatória",
-      validate: validatePasswordLogin,
-    },
+      validate: validatePasswordLogin
+    }
   };
 
-  return {  
-    rules: rules,
-    handleLogin,
-    handleSubmit,
-    loading,
+  return {
     control,
-    errors
-  }
+    handleSubmit,
+    handleLogin,
+    rules,
+    errors,
+    loading
+  };
 }
 
 export default useHookLogin;

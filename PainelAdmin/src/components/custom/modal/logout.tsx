@@ -43,7 +43,7 @@ const AlertLogout = ({ children }: AlertLogoutProps) => {
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel className="rounded-md ">Cancelar</AlertDialogCancel>
-                    <button id="confirmLogout" className="rounded-md bg-red-500/80 transition px-7 py-1 text-white hover:bg-red-500"
+                    <button id="confirmLogout" className="rounded-md bg-red-500 transition px-7 py-1 text-white"
                         onClick={() => handleLogout()}>
                         Sair
                     </button>

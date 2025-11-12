@@ -4,9 +4,11 @@ import { AuthProvider } from "./context/AuthContext";
 
 import "./index.css";
 import WebRoutes from "./routes/Routes";
+import { Toaster } from "./components/ui/sonner";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
+    <Toaster position="top-center" />
     <AuthProvider>
         <WebRoutes />
     </AuthProvider>

@@ -6,15 +6,15 @@ import { ButtonPadrao } from '@/src/components/form/Buttons';
 import TopoMyVehicle from '@/src/components/base/TopoMyVehicle';
 import useGetUserData from '@/src/hooks/hookUser/useGetUserData';
 import InformationBox from '@/src/components/form/InformarionBox';
-import useGetVehicleData from '@/src/hooks/hookVehicle/useGetVehicleData';
 import useDeleteVehicle from '@/src/hooks/hookVehicle/useDeleteVehicle';
+import useGetVehicleData from '@/src/hooks/hookVehicle/useGetVehicleData';
 
 import ModalConfirmation from '@/src/components/modal/ModalConfirmation';
 import useGetFreightConfirm from '@/src/hooks/hookFreight/useGetFreightComfirm';
 
 import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@/src/navigation/Routes';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
