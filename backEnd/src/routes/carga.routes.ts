@@ -3,10 +3,10 @@ import { createCarga, getAllCargas, getCargaById, updateCarga, deleteCarga } fro
 import { authMiddleware } from '../middleware/authMiddleware';
 
 const router = Router();
-router.post('/carga', authMiddleware, createCarga);
-router.get('/carga', authMiddleware, getAllCargas);
-router.get('/carga/:id', authMiddleware, getCargaById);
-router.put('/carga/:id', authMiddleware, updateCarga);
-router.delete('/carga/:id', authMiddleware, deleteCarga);
+router.post('/carga', createCarga);
+router.get('/carga', getAllCargas);
+router.get('/carga/:id', getCargaById);
+router.put('/carga/:id', updateCarga);
+router.delete('/carga/:id', deleteCarga);
 
 export default router;

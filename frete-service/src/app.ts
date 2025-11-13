@@ -1,15 +1,13 @@
-import express from 'express';
+import express from "express";
 import cors from "cors";
-import path from 'path';
+import fretesRouter from "./routes/fretes.routes";
+import statusRouter from "./routes/status.routes";
 
 const app = express();
 app.use(cors());
-
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
-
 app.use(express.json());
-app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
+
+app.use("/fretes", fretesRouter);
+app.use("/status", statusRouter);
 
 export default app;

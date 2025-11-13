@@ -3,10 +3,10 @@ import { createEmpresa, getAllEmpresas, getEmpresaById, updateEmpresa, deleteEmp
 import { authMiddleware } from '../middleware/authMiddleware';
 
 const router = Router();
-router.post('/empresa', authMiddleware, createEmpresa);
-router.get('/empresa', authMiddleware, getAllEmpresas);
-router.get('/empresa/:id', authMiddleware, getEmpresaById);
-router.put('/empresa/:id', authMiddleware, updateEmpresa);
-router.delete('/empresa/:id', authMiddleware, deleteEmpresa);
+router.post('/empresa', createEmpresa);
+router.get('/empresa', getAllEmpresas);
+router.get('/empresa/:id', getEmpresaById);
+router.put('/empresa/:id', updateEmpresa);
+router.delete('/empresa/:id', deleteEmpresa);
 
 export default router;

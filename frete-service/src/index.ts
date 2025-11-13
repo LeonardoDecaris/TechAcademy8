@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3000;
     await sequelize.authenticate();
     console.log('Database authenticated');
     await sequelize.sync({ alter: false }); // ou { force: false }
-    console.log('Database synchronized');
+    console.log('Banco de dados sincronizado.'); // igual ao monolito
     app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
   } catch (err) {
     console.error('Erro ao sincronizar o banco de dados:', err);

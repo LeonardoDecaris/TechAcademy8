@@ -3,10 +3,10 @@ import { createCaminhoneiro, getAllCaminhoneiros, getCaminhoneiroById, updateCam
 import { authMiddleware } from '../middleware/authMiddleware';
 
 const router = Router();
-router.post('/caminhoneiro', authMiddleware, createCaminhoneiro);
-router.get('/caminhoneiro', authMiddleware, getAllCaminhoneiros);
-router.get('/caminhoneiro/:id', authMiddleware, getCaminhoneiroById);
-router.put('/caminhoneiro/:id', authMiddleware, updateCaminhoneiro);
-router.delete('/caminhoneiro/:id', authMiddleware, deleteCaminhoneiro);
+router.post('/caminhoneiro', createCaminhoneiro);
+router.get('/caminhoneiro', getAllCaminhoneiros);
+router.get('/caminhoneiro/:id', getCaminhoneiroById);
+router.put('/caminhoneiro/:id', updateCaminhoneiro);
+router.delete('/caminhoneiro/:id', deleteCaminhoneiro);
 
 export default router;

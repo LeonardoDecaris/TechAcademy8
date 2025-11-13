@@ -4,7 +4,7 @@ info:
   version: 1.0.0
   description: API para gerenciamento de cargas, caminhoneiros, empresas, fretes, usuários, status, veículos, tipos de carga e imagens.
 servers:
-  - url: http://localhost:3000
+  - url: http://localhost:8080/api
 
 tags:
   - name: Auth
@@ -982,7 +982,7 @@ components:
           example: senha123
         cpf:
           type: string
-          example: 12345678900
+          example: 66908315070
         cnh:
           type: string
           example: E

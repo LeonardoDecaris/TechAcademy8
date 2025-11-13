@@ -20,14 +20,6 @@ export interface Empresa {
     endereco: string;
 }
 
-export interface Frete {
-    id: number;
-    cargaId: number;
-    caminhoneiroId: number;
-    valor: number;
-    statusId: number;
-}
-
 export interface ImagemCarga {
     id: number;
     cargaId: number;
@@ -45,12 +37,6 @@ export interface ImagemUsuario {
     usuarioId: number;
     url: string;
 }
-
-export interface Status {
-    id: number;
-    descricao: string;
-}
-
 export interface Usuario {
     id: number;
     nome: string;
