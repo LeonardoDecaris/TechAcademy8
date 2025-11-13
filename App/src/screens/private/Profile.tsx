@@ -43,6 +43,7 @@ const Profile = () => {
 	const goMyVehicle = useCallback(() => navigation.navigate('MyVehicle'), [navigation]);
 	const goEditProfile = useCallback(() => navigation.navigate('EditProfile'), [navigation]);
 	const goRegisterVehicle = useCallback(() => navigation.navigate('RegisterVehicle'), [navigation]);
+	const goAdmin = useCallback(() => navigation.navigate('Admin'), [navigation]);
 
 	const { getVehicleData, veiculo } = useGetVehicleData();
 	const { userData, iniciasNomeUsuario, nomeAbreviado, getUserData } = useGetUserData();
@@ -102,7 +103,7 @@ const Profile = () => {
 					)}
 					<AcessoRapidoPerfil titulo='Cancelar meu Cadastro' loginOut tipo='user-edit' onPress={() => setDeletingAccount(true)} />
 					{userAdmin === true && (
-						<AcessoRapidoPerfil titulo='Area do admin' tipo='' onPress={() => {}} />
+						<AcessoRapidoPerfil titulo='Area do admin' tipo='' onPress={goAdmin} />
 					)}
 				</View>
 

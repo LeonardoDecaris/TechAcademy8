@@ -56,6 +56,7 @@ export type RootStackParamList = {
     };
   };
 
+  Admin: undefined;
   RegisterVehicle: undefined;
   DetailsVehicle: undefined;
   DetailsEnvio: undefined;
@@ -104,6 +105,10 @@ function Routes() {
 
         <Stack.Screen name="EditVehicle" options={{ headerTitle: "Editar Veículo", headerTitleAlign: "center", headerBackVisible: true }}>
           {() => <PrivateRoutes><EditVehicle /></PrivateRoutes>}
+        </Stack.Screen>
+
+        <Stack.Screen name="Admin" options={{ headerTitle: "Admin", headerTitleAlign: "center", headerBackVisible: true }}>
+          {() => <PrivateRouteAdmin><Admin /></PrivateRouteAdmin>}
         </Stack.Screen>
 
         <Stack.Screen name="NewPassword" component={NewPassword} options={{ headerTitle: "Nova Senha", headerTitleAlign: "center", headerBackVisible: true }} />
