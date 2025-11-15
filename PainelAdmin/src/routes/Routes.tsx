@@ -7,26 +7,37 @@ import Home from "@/pages/auth/Home";
 import Erro404 from "@/pages/pagesAcesso/Erro404";
 import ErroSemAcesso from "@/pages/pagesAcesso/ErroSemAcesso";
 import PrivateRoute from "./PrivateRoutes";
+import ListaUsuario from "@/pages/auth/ListaUsuario";
+import { AuthProvider } from "@/context/AuthContext";
 
 const ROUTES_HEADER = ["/", "/sem-acesso", "/*"];
 
 const WebRoutes = () => {
     return (
         <BrowserRouter>
-            <HeaderWrapper />
-            <Routes>
-                <Route path="/home" element={
-                    <PrivateRoute>
-                        <Home />
-                    </PrivateRoute>
-                } />
+            <AuthProvider>
 
-                <Route path="/" element={<Login />} />
+                <HeaderWrapper />
+                <Routes>
+                    <Route path="/home" element={
+                        <PrivateRoute>
+                            <Home />
+                        </PrivateRoute>
+                    } />
 
-                <Route path="/sem-acesso" element={<ErroSemAcesso />} />
-                <Route path="*" element={<Erro404 />} />
+                    <Route path="/usuarios" element={
+                        <PrivateRoute>
+                            <ListaUsuario />
+                        </PrivateRoute>
+                    } />
 
-            </Routes>
+                    <Route path="/" element={<Login />} />
+
+                    <Route path="/sem-acesso" element={<ErroSemAcesso />} />
+                    <Route path="*" element={<Erro404 />} />
+
+                </Routes>
+            </AuthProvider>
         </BrowserRouter>
     );
 }
