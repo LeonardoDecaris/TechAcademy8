@@ -10,7 +10,7 @@ export const createFreteSchema = z.object({
   status_id: z.number().int(),
   empresa_id: z.number().int().optional(),
   carga_id: z.number().int(),
-  caminhoneiro_id: z.number().int(),
+  caminhoneiro_id: z.number().int().optional(),
 });
 
 export const updateFreteSchema = createFreteSchema.partial();
