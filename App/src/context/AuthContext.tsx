@@ -5,13 +5,15 @@ import { jwtDecode } from "jwt-decode";
 interface TokenPayload {
     id_usuario: string;
     nome: string;
-    user?: { id_usuario: string; nome: string; }
+    admin: boolean;
+    user?: { id_usuario: string; nome: string; admin: boolean; };
 }
 
 interface AuthContextType {
   token: string | null;
   userId: string | null;
   userName: string | null;
+  userAdmin: boolean | null;
   isAuthenticated: boolean;
 
   login: (token: string) => Promise<void>;
@@ -34,6 +36,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [token, setToken] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
   const [userName, setUserName] = useState<string | null>(null);
+  const [userAdmin, setUserAdmin] = useState<boolean | null>(null);
 
   useEffect(() => {
     const loadAuthData = async () => {
@@ -44,6 +47,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             setToken(storedToken);
             setUserId(userData.id_usuario);
             setUserName(userData.nome);
+            setUserAdmin(userData.admin);
         }
       }
     };
@@ -56,6 +60,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (userData) {
       setUserId(userData.id_usuario);
       setUserName(userData.nome);
+      setUserAdmin(userData.admin);
     }
     setToken(token);
   };
@@ -65,10 +70,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setToken(null);
     setUserId(null);
     setUserName(null);
+    setUserAdmin(null);
   };
 
   return (
-    <AuthContext.Provider value={{ token, userId, userName, login, logout, isAuthenticated: !!token }}>
+    <AuthContext.Provider value={{ token, userId, userName, userAdmin, login, logout, isAuthenticated: !!token }}>
       {children}
     </AuthContext.Provider>
   );

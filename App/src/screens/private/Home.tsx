@@ -39,7 +39,7 @@ const STYLES = {
 
 const Home = () => {
 
-    const { logout } = useAuth();
+const { logout } = useAuth();
     const navigation = useNavigation<NavigationProp>();
     const insets = useSafeAreaInsets();
 
@@ -148,7 +148,7 @@ const Home = () => {
                             )}
                         </TouchableOpacity>
                         <Text className={STYLES.greetingText}>
-                            Olá, {nomeAbreviado ?? 'Usuário'}!
+                            Olá, {nomeAbreviado ?? 'Usuário'}! 
                         </Text>
                     </View>
                     <TouchableOpacity onPress={() => setLogoutModalVisible(true)} accessibilityLabel="Sair da conta">

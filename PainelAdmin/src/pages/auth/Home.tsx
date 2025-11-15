@@ -1,7 +1,10 @@
 
+
 function Home() {
+
     return(
-        <main>
+        <main className="p-4" >
+
         </main>
     );
 }

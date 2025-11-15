@@ -1,12 +1,12 @@
 import { Router } from 'express';
 import { createCaminhoneiro, getAllCaminhoneiros, getCaminhoneiroById, updateCaminhoneiro, deleteCaminhoneiro } from '../controllers/caminhoneiro.controller';
-import { authMiddleware } from '../middleware/authMiddleware';
+import { requireAdmin } from '../middleware/authMiddleware';
 
 const router = Router();
-router.post('/caminhoneiro', createCaminhoneiro);
-router.get('/caminhoneiro', getAllCaminhoneiros);
-router.get('/caminhoneiro/:id', getCaminhoneiroById);
-router.put('/caminhoneiro/:id', updateCaminhoneiro);
-router.delete('/caminhoneiro/:id', deleteCaminhoneiro);
+router.post('/caminhoneiro', requireAdmin, createCaminhoneiro);
+router.get('/caminhoneiro', requireAdmin, getAllCaminhoneiros);
+router.get('/caminhoneiro/:id', requireAdmin, getCaminhoneiroById);
+router.put('/caminhoneiro/:id', requireAdmin, updateCaminhoneiro);
+router.delete('/caminhoneiro/:id', requireAdmin, deleteCaminhoneiro);
 
 export default router;

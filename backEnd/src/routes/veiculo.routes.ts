@@ -1,17 +1,17 @@
 import { Router } from 'express';
 import { createVeiculo, getAllVeiculos, getVeiculoById, updateVeiculo, deleteVeiculo, getVeiculoByUsuarioId, createVeiculoByUsuarioId, updateVeiculoByUsuarioId, deleteVeiculoByUsuarioId, } from '../controllers/veiculo.controller';
-import { authMiddleware } from '../middleware/authMiddleware';
+import { requireAdmin, authMiddlewareVeiculoUserOrAdmin} from '../middleware/authMiddleware';
 
 const router = Router();
-router.post('/veiculo', authMiddleware, createVeiculo);
-router.get('/veiculo', authMiddleware, getAllVeiculos);
-router.get('/veiculo/:id', authMiddleware, getVeiculoById);
-router.put('/veiculo/:id',  authMiddleware, updateVeiculo);
-router.delete('/veiculo/:id', authMiddleware, deleteVeiculo);
+router.post('/veiculo', requireAdmin, createVeiculo);
+router.get('/veiculo', requireAdmin, getAllVeiculos);
+router.get('/veiculo/:id', requireAdmin, getVeiculoById);
+router.put('/veiculo/:id',  requireAdmin, updateVeiculo);
+router.delete('/veiculo/:id', requireAdmin, deleteVeiculo);
 
-router.get('/usuario/:usuarioId/veiculo', authMiddleware, getVeiculoByUsuarioId);
-router.post('/usuario/:usuarioId/veiculo', authMiddleware, createVeiculoByUsuarioId);
-router.put('/usuario/:usuarioId/veiculo/:id', authMiddleware, updateVeiculoByUsuarioId);
-router.delete('/usuario/:usuarioId/veiculo', authMiddleware, deleteVeiculoByUsuarioId);
+router.get('/usuario/:usuarioId/veiculo', authMiddlewareVeiculoUserOrAdmin({usuarioId: 'usuarioId'}), getVeiculoByUsuarioId);
+router.post('/usuario/:usuarioId/veiculo', authMiddlewareVeiculoUserOrAdmin({usuarioId: 'usuarioId'}), createVeiculoByUsuarioId);
+router.put('/usuario/:usuarioId/veiculo/:id', authMiddlewareVeiculoUserOrAdmin({usuarioId: 'usuarioId'}), updateVeiculoByUsuarioId);
+router.delete('/usuario/:usuarioId/veiculo', authMiddlewareVeiculoUserOrAdmin({usuarioId: 'usuarioId'}), deleteVeiculoByUsuarioId);
 
 export default router;
