@@ -1,8 +1,8 @@
 import React, { useEffect, useCallback, useState, useMemo, memo } from 'react';
-import { Image, ScrollView, RefreshControl, TouchableOpacity, View, Text, ActivityIndicator } from 'react-native';
+import { Image, ScrollView, RefreshControl, TouchableOpacity, View, Text } from 'react-native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
 
 // --- Configuração e Tipos ---
@@ -17,9 +17,9 @@ import useGetVehicleData from '@/src/hooks/hookVehicle/useGetVehicleData';
 import useGetFreightConfirm from '@/src/hooks/hookFreight/useGetFreightComfirm';
 
 // --- Componentes ---
-import AcessoRapido from '@/src/components/base/AcessoRapido';
 import CardFreight from '@/src/components/cards/CardFreight';
 import VehicleCard from '@/src/components/cards/VehicleCard';
+import AcessoRapido from '@/src/components/base/AcessoRapido';
 import CardMyContract from '@/src/components/cards/CardMyContract';
 import ModalConfirmation from '@/src/components/modal/ModalConfirmation';
 import AlertNotification from '@/src/components/modal/AlertNotification';
@@ -104,6 +104,7 @@ const { logout } = useAuth();
             setNoVehicleModalVisible(true);
         }
     }, [hasVehicle, navigation]);
+
     const handleNavigateToDetailsEnvio = useCallback(() => {
         if (hasFrete) {
             navigation.navigate('DetailsEnvio');
