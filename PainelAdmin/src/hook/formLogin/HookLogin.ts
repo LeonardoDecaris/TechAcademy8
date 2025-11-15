@@ -31,10 +31,6 @@ function useHookLogin() {
     try {
       const { data } = await http.post<LoginResponse>("login", formData);
 
-      if (!data?.token) {
-        throw { message: "Token ausente na resposta." };
-      }
-
       login(data.token);
       navigate("/home");
 

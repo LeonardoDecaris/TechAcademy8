@@ -1,6 +1,7 @@
 import { useAuth } from "@/context/AuthContext";
 import http from "@/server/http";
-import { useCallback, useState } from "react";
+import { getDisplayName } from "@/util/funcoes";
+import { useCallback, useMemo, useState } from "react";
 
 
 interface User {
@@ -13,7 +14,7 @@ interface User {
 
 function useHookGetUser() {
   const { userId } = useAuth();
-  const [userData, setUserData] = useState<User | null>(null);
+  const [userData, setUserData] = useState<User>();
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -31,11 +32,18 @@ function useHookGetUser() {
     }
   }, [userId]);
 
+
+  const nomeAbreviado = useMemo(
+    () => getDisplayName(userData?.nome ?? ""),
+    [userData?.nome]
+  );
+
   return {
     userData,
     handleGetUser,
     loading,
     message,
+    nomeAbreviado
   };
 }
 

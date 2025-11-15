@@ -1,16 +1,12 @@
 import type { ReactNode } from "react";
 import { jwtDecode } from "jwt-decode";
 import { createContext, useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface UserPayload {
-    id_usuario: number;
-    admin: boolean;
+    id_usuario: string;
+    admin?: string | boolean | null;
 }
-
-interface TokenPayload {
-    user: UserPayload;
-}
-
 interface AuthContextType {
     token: string | null;
     userId: string | null;
@@ -25,30 +21,33 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const decodeToken = (token: string): UserPayload | null => {
     try {
-        const decoded = jwtDecode<TokenPayload>(token);
-        return decoded.user;
+        return jwtDecode<UserPayload>(token);
     } catch (error) {
         console.error("Erro ao decodificar token:", error);
         return null;
     }
 };
 
+const parseAdmin = (value: unknown): boolean =>
+    value === true || value === "true" || value === "1";
+
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [token, setToken] = useState<string | null>(localStorage.getItem("authToken"));
     const [userId, setUserId] = useState<string | null>(localStorage.getItem("userId"));
-    const [userAdmin, setUserAdmin] = useState<boolean>(localStorage.getItem("userAdmin") === "true");
+    const [userAdmin, setUserAdmin] = useState<boolean>(() => parseAdmin(localStorage.getItem("userAdmin")));
+    const navigate = useNavigate();
 
     const login = (token: string) => {
         localStorage.setItem("authToken", token);
-
         const userData = decodeToken(token);
 
         if (userData) {
-            localStorage.setItem("userId", String(userData.id_usuario));
-            localStorage.setItem("userAdmin", String(userData.admin));
+            const adminBool = parseAdmin(userData.admin);
+            localStorage.setItem("userId", userData.id_usuario || "");
+            localStorage.setItem("userAdmin", String(adminBool));
 
-            setUserId(String(userData.id_usuario));
-            setUserAdmin(userData.admin);
+            setUserId(userData.id_usuario || null);
+            setUserAdmin(adminBool);
         }
 
         setToken(token);
@@ -63,20 +62,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setUserId(null);
         setUserAdmin(false);
 
-        location.reload();
+        navigate("/");
     };
 
     return (
-        <AuthContext.Provider
-            value={{
-                token,
-                userId,
-                userAdmin,
-                login,
-                logout,
-                isAuthenticated: !!token,
-            }}
-        >
+        <AuthContext.Provider value={{ token, userId, userAdmin, login, logout, isAuthenticated: !!token }}>
             {children}
         </AuthContext.Provider>
     );
