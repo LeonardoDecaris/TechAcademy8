@@ -111,7 +111,7 @@ export async function createFreteService(payload: any, auth?: string) {
     await ensureCaminhoneiroExists(data.caminhoneiro_id, headers);
   }
 
-  const frete = await Frete.create(data);
+  const frete = await Frete.create(payload);
   return frete;
 }
 

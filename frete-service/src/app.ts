@@ -8,7 +8,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// exige autenticação para tudo do microserviço
 app.use(authMiddleware);
 
 app.use("/fretes", fretesRouter);
