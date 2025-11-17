@@ -1,3 +1,5 @@
+import EditarUsuario from "../modal/EditarUsuario";
+
 type Props = {
     id: number;
     nome: string;
@@ -7,7 +9,7 @@ type Props = {
 };
 
 const ListaItem = (props: Props) => {
-    
+
     const formatCpf = (cpf: string) => {
         const digits = cpf.replace(/\D/g, '').padStart(11, '0').slice(0, 11);
         return digits.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
@@ -19,7 +21,15 @@ const ListaItem = (props: Props) => {
                 <h3 className="text-white font-bold">{props.id}</h3>
                 <div className="flex items-center gap-1.5 ">
                     <button className="bg-red-500 text-sm text-white font-semibold rounded-sm px-2 py-1 cursor-pointer">excluir</button>
-                    <button className="bg-white text-sm font-semibold rounded-sm px-2 py-1 cursor-pointer">editar</button>
+                    <EditarUsuario
+                        id={props.id}
+                        nome={props.nome}
+                        email={props.email}
+                        cpf={props.cpf}
+                        cnh={props.cnh}
+                    >
+                        <button className="bg-white text-sm font-semibold rounded-sm px-2 py-1 cursor-pointer">editar</button>
+                    </EditarUsuario>
                 </div>
             </div>
             <ul>

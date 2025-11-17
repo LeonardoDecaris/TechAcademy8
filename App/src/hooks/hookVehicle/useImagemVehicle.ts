@@ -34,7 +34,7 @@ function useImagemVehicle(): responseImage {
             const imageData = trataFormData(uri);
             formData.append("imgUrl", imageData as any);
 
-            const response = await http.post<{ id_imagemVeiculo: number }>("imgCaminhao", formData, {
+            const response = await http.post<{ id_imagemVeiculo: number }>("api/imgCaminhao", formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
 

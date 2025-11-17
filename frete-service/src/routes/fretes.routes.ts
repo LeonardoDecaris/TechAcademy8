@@ -3,11 +3,11 @@ import * as freteController from "../controllers/frete.controller";
 
 const router = Router();
 
-// não repita /fretes aqui; o app.ts já monta em /fretes
 router.get("/", freteController.getAllFretes);
 router.post("/", freteController.createFrete);
-// router.get("/:id", freteController.getById) // se tiver
+router.get("/:id", freteController.getFreteById) 
 router.put("/:id", freteController.updateFrete);
 router.delete("/:id", freteController.deleteFrete);
+router.get("/caminhoneiro/:caminhoneiroId", freteController.getFretesByCaminhoneiro);
 
 export default router;

@@ -1139,15 +1139,39 @@ components:
     FreteMS:
       type: object
       properties:
-        descricao: { type: string, example: Carga de aço }
-        origem: { type: string, example: SP }
-        destino: { type: string, example: RJ }
-        distanciaDestino: { type: number, example: 430 }
-        prazo: { type: string, example: 2d }
-        status_id: { type: integer, example: 1 }
-        empresa_id: { type: integer, example: 1 }
-        carga_id: { type: integer, example: 1 }
-        caminhoneiro_id: { type: integer, example: 1 }
+        saida:
+          type: string
+          example: Juranda
+        destino:
+          type: string
+          example: Quinta do Sol
+        valor_frete:
+          type: integer
+          example: 1000
+        data_saida:
+          type: string
+          format: date
+        data_chegada:
+          type: string
+          format: date
+        prazo:
+          type: integer
+          example: 5
+        distancia:
+          type: integer
+          example: 100
+        status_id:
+          type: integer
+          example: 1
+        caminhoneiro_id:
+          type: integer
+          example: 1
+        carga_id:
+          type: integer
+          example: 1
+        empresa_id:
+          type: integer
+          example: 1
 
     StatusMS:
       type: object

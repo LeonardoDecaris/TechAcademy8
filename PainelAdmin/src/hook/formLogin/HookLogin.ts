@@ -29,7 +29,7 @@ function useHookLogin() {
   const handleLogin = useCallback(async (formData: LoginForm): Promise<LoginResponse> => {
     setLoading(true);
     try {
-      const { data } = await http.post<LoginResponse>("login", formData);
+      const { data } = await http.post<LoginResponse>("api/login", formData);
 
       login(data.token);
       navigate("/home");

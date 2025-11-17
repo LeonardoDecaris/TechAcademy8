@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import Empresa from '../models/empresa.model';
+import ImagemEmpresa from '../models/imagem_empresa.model';
 
 export const createEmpresa = async (req: Request, res: Response) => {
     try {
@@ -15,7 +16,13 @@ export const createEmpresa = async (req: Request, res: Response) => {
 
 export const getAllEmpresas = async (req: Request, res: Response) => {
     try {
-        const empresas = await Empresa.findAll();
+        const empresas = await Empresa.findAll({
+              include: [{
+                model: ImagemEmpresa,
+                as: 'imagemEmpresa',
+                required: false
+            }]
+        });
         return res.status(200).json(empresas);
     } catch (error) {
         if (error instanceof Error) {
@@ -27,7 +34,13 @@ export const getAllEmpresas = async (req: Request, res: Response) => {
 
 export const getEmpresaById = async (req: Request, res: Response) => {
     try {
-        const empresa = await Empresa.findByPk(req.params.id);
+        const empresa = await Empresa.findByPk(req.params.id, {
+              include: [{
+                model: ImagemEmpresa,
+                as: 'imagemEmpresa',
+                required: false
+            }]
+        });
         if (!empresa) {
             return res.status(404).json({ message: 'Empresa not found' });
         }

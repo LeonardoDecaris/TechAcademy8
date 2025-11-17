@@ -16,8 +16,8 @@ interface CardCargaProps {
 
 const CardCargo = (props: CardCargaProps) => {
     
-    const imagemUrl = `${BASE_URL}${props.logoEmpresa}`;
-    const imagemCargaUrl = `${BASE_URL}${props.imagemCarga}`;
+    const imagemUrl = `${BASE_URL}api/${props.logoEmpresa}`;
+    const imagemCargaUrl = `${BASE_URL}api/${props.imagemCarga}`;
 
     return (
         <View className="w-full p-2.5 pt-5 bg-white rounded-2xl " style={{ boxShadow: "0 4px 4px rgba(0, 0, 0, 0.15)" }}>

@@ -35,10 +35,11 @@ export default function useGetVehicleData() {
 	const getVehicleData = useCallback(async () => {
 		try {
 			setLoading(true);
-			const { data } = await http.get<Caminhoneiro>(`/caminhoneiro/${userId}`);
+			const { data } = await http.get<Caminhoneiro>(`api/usuario/caminhoneiro/${userId}`);
 			setVeiculo(data);
 			return data;
 		} catch (error: any) {
+			console.error('Error fetching vehicle data:', error);
 			setVeiculo(null);
 		} finally {
 			setLoading(false);

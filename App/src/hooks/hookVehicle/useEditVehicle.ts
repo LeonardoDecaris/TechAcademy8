@@ -41,7 +41,7 @@ function useEditVehicle(id: number, imagemVeiculo_id: number) {
         setNotificationVisible(true);
 
         try {
-            await http.put(`veiculo/${id}`, {
+            await http.put(`api/veiculo/${id}`, {
                 marca: data.marca,
                 modelo: data.modelo,
                 placa: data.placa,

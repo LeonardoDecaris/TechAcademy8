@@ -49,7 +49,7 @@ function useRegisterVehicle() {
             setNotificationVisible(true);
 
             try {
-                await http.post(`/usuario/${userId}/veiculo`, {
+                await http.post(`api/usuario/${userId}/veiculo`, {
                     marca: data.marca,
                     modelo: data.modelo,
                     placa: data.placa,

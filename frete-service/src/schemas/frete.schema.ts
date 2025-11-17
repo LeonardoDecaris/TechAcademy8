@@ -1,16 +1,20 @@
-// filepath: c:\Users\Leonardo Decaris\Documents\Faculdade\1_TechAcademys\TechAcademy8\frete-service\src\schemas\frete.schema.ts
 import { z } from "zod";
 
-export const createFreteSchema = z.object({
-  descricao: z.string().min(1),
-  origem: z.string().min(1),
-  destino: z.string().min(1),
-  distanciaDestino: z.number().positive(),
-  prazo: z.string().min(1),
-  status_id: z.number().int(),
+export const baseFreteSchema = z.object({
+  saida: z.string().optional(),
+  destino: z.string().optional(),
+  valor_frete: z.number().optional(),
+  data_saida: z.date().optional().nullable(),
+  data_chegada: z.date().optional().nullable(),
+  prazo: z.number().optional(),
+  distancia: z.number().optional(),
+  status_id: z.number().int().optional(),
   empresa_id: z.number().int().optional(),
-  carga_id: z.number().int(),
-  caminhoneiro_id: z.number().int().optional(),
-});
+  carga_id: z.number().int().optional(),
+  caminhoneiro_id: z.number().int().nullable().optional(),
+}).strict();
 
-export const updateFreteSchema = createFreteSchema.partial();
+export const updateFreteSchema = baseFreteSchema;
+export const createFreteSchema = baseFreteSchema; // Se futuramente quiser campos obrigatórios, ajuste aqui.
+
+export type FreteInput = z.infer<typeof baseFreteSchema>;

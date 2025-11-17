@@ -22,7 +22,7 @@ const TopoDetailsCargo = ({ nome, destino, saida, tipo, peso, valor, valorFrete,
 	const legendaValorStyle = "w-[48%] text-black/80 font-semibold text-base text-center bg-[#98C2F4] py-2.5 rounded-lg";
 	const anoPlacaInternoStyle = "text-black/60 text-sm";
 
-	const imagemCarga = `${BASE_URL}${imagem}`
+	const imagemCarga = `${BASE_URL}api/${imagem}`
 
 	return (
 		<View className="pb-5">

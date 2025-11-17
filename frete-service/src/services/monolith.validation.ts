@@ -19,8 +19,8 @@ async function exists(path: string, id: number, headers: Headers) {
   }
 }
 
-export async function ensureCaminhoneiroExists(id?: number, headers?: Headers) {
-  if (!id) throw new AppError(400, "caminhoneiro_id é obrigatório");
+export async function ensureCaminhoneiroExists(id?: number | null, headers?: Headers) {
+  if (id == null) return;
   if (!(await exists(PATHS.caminhoneiro, id, headers))) {
     throw new AppError(404, "Caminhoneiro não encontrado");
   }

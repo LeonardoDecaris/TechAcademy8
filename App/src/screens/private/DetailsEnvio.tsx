@@ -53,7 +53,7 @@ const DetailsEnvio = () => {
         if (dadosFrete?.id_frete) concluirFrete(dadosFrete.id_frete.toString());
     }, [concluirFrete, dadosFrete?.id_frete]);
     
-    const imagemUrl = userData?.imagemUsuario?.imgUrl ? `${BASE_URL}${userData.imagemUsuario.imgUrl}` : null;
+    const imagemUrl = userData?.imagemUsuario?.imgUrl ? `${BASE_URL}api/${userData.imagemUsuario.imgUrl}` : null;
 
     const onRefresh = useCallback(async () => {
         setRefreshing(true);
