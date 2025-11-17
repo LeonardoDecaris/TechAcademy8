@@ -16,7 +16,7 @@ function useDeleteUsuario(): UseDeleteUsuario {
 	
 	const deleteUsuario = useCallback(async () => {
 		try {
-			await http.delete(`usuario/${userId}`);
+			await http.delete(`api/usuario/${userId}`);
 			logout();
 		} catch (error) {
 			console.error("Erro ao deletar usuário:", error);

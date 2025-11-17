@@ -49,7 +49,7 @@ const Profile = () => {
 	const { userData, iniciasNomeUsuario, nomeAbreviado, getUserData } = useGetUserData();
 
 	const hasVehicle = Boolean(veiculo?.veiculo);
-	const imagemUrl = userData?.imagemUsuario?.imgUrl ? `${BASE_URL}${userData.imagemUsuario.imgUrl}` : '';
+	const imagemUrl = userData?.imagemUsuario?.imgUrl ? `${BASE_URL}api/${userData.imagemUsuario.imgUrl}` : '';
 
 	const handleConfirmLogout = useCallback(async () => {
 		setLoggingOut(true);

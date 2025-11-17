@@ -65,7 +65,7 @@ function useLogin() {
 			}
 
 			try {
-				const response = await http.post("login", {
+				const response = await http.post("api/login", {
 					email: data.email,
 					password: data.password,
 				});

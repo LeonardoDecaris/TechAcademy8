@@ -45,6 +45,7 @@ const { logout } = useAuth();
 
     const { userData, getUserData, iniciasNomeUsuario, nomeAbreviado } = useGetUserData();
     const { getVehicleData, veiculo } = useGetVehicleData();
+
     const caminhoneiroId = veiculo?.id_caminhoneiro;
     const {
         getDados: getDadosFrete,
@@ -54,6 +55,7 @@ const { logout } = useAuth();
         successVisible,
         dadosFrete
     } = useGetFreightConfirm(caminhoneiroId || 0);
+    console.log(dadosFrete, 'dadosFrete Home');
 
     const [refreshing, setRefreshing] = useState(false);
     const [isLogoutModalVisible, setLogoutModalVisible] = useState(false);
@@ -68,8 +70,8 @@ const { logout } = useAuth();
 
     const hasVehicle = Boolean(veiculo?.veiculo);
     const hasFrete = Boolean(dadosFrete?.id_frete);
-    const userImageUrl = userData?.imagemUsuario?.imgUrl ? `${BASE_URL}${userData.imagemUsuario.imgUrl}` : '';
-    const vehicleImageUrl = veiculo?.veiculo?.imagemVeiculo?.imgUrl ? `${BASE_URL}${veiculo.veiculo.imagemVeiculo.imgUrl}` : '';
+    const userImageUrl = userData?.imagemUsuario?.imgUrl ? `${BASE_URL}api/${userData.imagemUsuario.imgUrl}` : '';
+    const vehicleImageUrl = veiculo?.veiculo?.imagemVeiculo?.imgUrl ? `${BASE_URL}api/${veiculo.veiculo.imagemVeiculo.imgUrl}` : '';
 
     const fetchInitialData = useCallback(async () => {
         await Promise.all([

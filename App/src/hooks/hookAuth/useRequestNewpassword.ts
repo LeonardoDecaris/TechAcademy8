@@ -37,7 +37,7 @@ function useRequestNewpassword() {
       setNotificationVisible(true);
 
       try {
-        const res = await http.post("request-password-reset", {
+        const res = await http.post("api/request-password-reset", {
           email: data.email,
           cpf: data.cpf,
         });

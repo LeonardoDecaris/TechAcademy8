@@ -16,7 +16,7 @@ interface userData {
 }
 
 function ListaUsuario() {
-  const { dataUser, handleGetUser } = useHookGetAllUser();
+  const { dataUser } = useHookGetAllUser();
   const { register, handleSubmit } = useForm<FormValues>();
   const [filteredUsers, setFilteredUsers] = useState<userData[]>([]);
 
@@ -32,10 +32,6 @@ function ListaUsuario() {
   useEffect(() => {
     setFilteredUsers(dataUser);
   }, [dataUser]);
-
-  useEffect(() => {
-    handleGetUser();
-  }, []);
 
   return (
     <main className="flex-1 m-auto h-screen max-w-[1200px] py-5">

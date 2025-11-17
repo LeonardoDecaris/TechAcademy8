@@ -20,7 +20,7 @@ function useDeleteVehicle() {
 
     const deleteVehicle = async () => {
         try {
-            await http.delete(`caminhoneiro/${userId}`);
+            await http.delete(`api/caminhoneiro/${userId}`);
 
             setSuccess(true);
             setMensage("Veículo deletado com sucesso.");

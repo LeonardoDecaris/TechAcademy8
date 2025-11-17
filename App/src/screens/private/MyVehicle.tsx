@@ -36,7 +36,7 @@ const MyVehicle = () => {
     const handleToEditMyVehicle = useCallback(() => navigation.navigate('EditVehicle'), [navigation]);
 
     const imagemUrl = useMemo(() => (
-		veiculo?.veiculo?.imagemVeiculo?.imgUrl ? `${BASE_URL}${veiculo.veiculo.imagemVeiculo.imgUrl}` : ''
+		veiculo?.veiculo?.imagemVeiculo?.imgUrl ? `${BASE_URL}api/${veiculo.veiculo.imagemVeiculo.imgUrl}` : ''
 	), [veiculo]);
 
 	const capacidadeFormatada = useMemo(() => {

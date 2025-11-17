@@ -1,9 +1,9 @@
 import { useCallback, useState } from "react";
-import http from "../../service/httpAxios";
 
 import { useNavigation } from "@react-navigation/core";
 import { RootStackParamList } from "@/src/navigation/Routes";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import http from "@/src/service/httpAxios";
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
@@ -28,7 +28,7 @@ function useConcluirFreight() {
         setSuccessVisible(true);
 
         try {
-            await http.put(`/frete/${id}`, {
+            await http.put(`fretesApi/fretes/${id}`, {
                 status_id: 5,
                 caminhoneiro_id: null,
                 data_chegada: new Date().toISOString(),
@@ -49,6 +49,7 @@ function useConcluirFreight() {
 
         } catch (error) {
             setSuccessVisible(false);
+            console.error("Erro ao confirmar frete:", error);
             setTimeout(() => {
                 setSuccess("error");
                 setMensage("Erro ao confirmar frete, tente novamente, se o erro persistir contate o suporte");

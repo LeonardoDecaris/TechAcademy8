@@ -11,41 +11,49 @@ Frete.init(
       autoIncrement: true,
       primaryKey: true,
     },
-    descricao: {
+    saida: {
       type: DataTypes.STRING,
-      allowNull: false,
-    },
-    origem: {
-      type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     destino: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
-    distanciaDestino: {
-      type: DataTypes.FLOAT,
-      allowNull: false,
+    valor_frete: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    data_saida: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    data_chegada: {
+      type: DataTypes.DATE,
+      allowNull: true,
     },
     prazo: {
-      type: DataTypes.STRING,
-      allowNull: false,
+      type: DataTypes.INTEGER,
+      allowNull: true,
     },
-    caminhoneiro_id: {
+    distancia: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
     status_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
-    empresa_id: {
+    caminhoneiro_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     carga_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
+    },
+    empresa_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
     },
   },
   {

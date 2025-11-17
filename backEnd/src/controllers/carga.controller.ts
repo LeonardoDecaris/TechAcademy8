@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
 import Carga from '../models/carga.model';
+import { includes } from 'zod';
+import ImagemCarga from '../models/imagem_carga.model';
 
 export const createCarga = async (req: Request, res: Response): Promise<Response> => {
     try {
@@ -15,7 +17,13 @@ export const createCarga = async (req: Request, res: Response): Promise<Response
 
 export const getAllCargas = async (req: Request, res: Response): Promise<Response> => {
     try {
-        const cargas = await Carga.findAll();
+        const cargas = await Carga.findAll({
+            include: [{
+                model: ImagemCarga,
+                as: 'imagemCarga',
+                required: false
+            }]
+        });
         return res.status(200).json(cargas);
     } catch (error) {
         if (error instanceof Error) {
@@ -27,7 +35,13 @@ export const getAllCargas = async (req: Request, res: Response): Promise<Respons
 
 export const getCargaById = async (req: Request<{ id: string }>, res: Response): Promise<Response> => {
     try {
-        const carga = await Carga.findByPk(req.params.id);
+        const carga = await Carga.findByPk(req.params.id, {
+            include: [{
+                model: ImagemCarga,
+                as: 'imagemCarga',
+                required: false
+            }]
+        });
         if (!carga) {
             return res.status(404).json({ message: 'Carga not found' });
         }
