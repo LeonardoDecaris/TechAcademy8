@@ -75,6 +75,10 @@ function extractIds(data: any) {
 async function fetchEntity(path: string, id?: number, headers?: Record<string, string>) {
   if (!id) return null;
   try {
+    // monta a key do cache do redis
+    // busca no redis
+    // valida se tinha valor, se sim retorna e adiciona no cache
+    // se nao, busca na monolith
     const { data } = await client.get(`${path}/${id}`, { headers });
     return data;
   } catch {
