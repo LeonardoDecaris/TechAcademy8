@@ -9,6 +9,7 @@ import {
 
 import AppError from "../utils/AppError";
 import client from "../utils/monolithClient";
+import { enqueuePendingToNaoIniciado } from "../queues/freteStatus.queue";
 
 const CARGAS_PATH = process.env.MONOLITH_CARGAS_PATH || "/carga";
 const EMPRESAS_PATH = process.env.MONOLITH_EMPRESAS_PATH || "/empresa";
@@ -112,11 +113,18 @@ export async function createFreteService(payload: any, auth?: string) {
   }
 
   const frete = await Frete.create(data);
+
+  // se vier como Pendente (1), agenda transição para "Não iniciado" (2)
+  const status = frete.get("status_id") as number;
+  if (status === 1) {
+    await enqueuePendingToNaoIniciado(frete.get("id_frete") as number);
+  }
+
   return frete;
 }
 
 /* DESCRIÇÃO: Serviço para listar todos os fretes.
-*/  
+*/
 export async function listFretesService(auth?: string) {
   const headers = buildHeaders(auth);
   const fretes = await Frete.findAll({
@@ -169,7 +177,7 @@ export async function updateFreteService(id: number, payload: any, auth?: string
   if (data.caminhoneiro_id !== undefined && data.caminhoneiro_id !== null) {
     await ensureCaminhoneiroExists(data.caminhoneiro_id, headers);
   }
-  
+
   if (data.empresa_id !== undefined) await ensureEmpresaExists(data.empresa_id, headers);
   if (data.carga_id !== undefined) await ensureCargaExists(data.carga_id, headers);
 
