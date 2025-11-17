@@ -60,7 +60,7 @@ function useForgotPassword() {
           throw new Error("Dados insuficientes. Por favor, solicite a redefinição novamente.");
         }
 
-        const res = await http.post("reset-password", {
+        const res = await http.post("api/reset-password", {
           email,
           cpf,
           token: tokenToUse,

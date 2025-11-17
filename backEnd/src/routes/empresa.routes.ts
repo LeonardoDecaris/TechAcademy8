@@ -1,12 +1,12 @@
 import { Router } from 'express';
 import { createEmpresa, getAllEmpresas, getEmpresaById, updateEmpresa, deleteEmpresa } from '../controllers/empresa.controller';
-import { authMiddleware, requireAdmin } from '../middleware/authMiddleware';
+import { authMiddleware } from '../middleware/authMiddleware';
 
 const router = Router();
-router.post('/empresa', requireAdmin, createEmpresa);
-router.get('/empresa', requireAdmin, getAllEmpresas);
-router.get('/empresa/:id', requireAdmin, getEmpresaById);
-router.put('/empresa/:id', requireAdmin, updateEmpresa);
-router.delete('/empresa/:id', requireAdmin, deleteEmpresa);
+router.post('/empresa', authMiddleware, createEmpresa);
+router.get('/empresa', authMiddleware, getAllEmpresas);
+router.get('/empresa/:id', authMiddleware, getEmpresaById);
+router.put('/empresa/:id', authMiddleware, updateEmpresa);
+router.delete('/empresa/:id', authMiddleware, deleteEmpresa);
 
 export default router;

@@ -20,7 +20,20 @@ export const createCaminhoneiro = async (req: Request, res: Response): Promise<R
 
 export const getAllCaminhoneiros = async (req: Request, res: Response): Promise<Response> => {
     try {
-        const caminhoneiros = await Caminhoneiro.findAll();
+        const caminhoneiros = await Caminhoneiro.findAll({
+            include: [
+                {
+                    model: Veiculo,
+                    as: 'veiculo',
+                    required: false,
+                    include: [{
+                        model: ImagemVeiculo,
+                        as: 'imagemVeiculo',
+                        required: false
+                    }]
+                },
+            ],
+        });
         return res.status(200).json(caminhoneiros);
     } catch (error) {
         if (error instanceof Error) {
@@ -30,8 +43,35 @@ export const getAllCaminhoneiros = async (req: Request, res: Response): Promise<
     }
 }
 
-
 export const getCaminhoneiroById = async (req: Request<{ id: string }>, res: Response): Promise<Response> => {
+    try {
+        const caminhoneiro = await Caminhoneiro.findOne({
+            include: [
+                {
+                    model: Veiculo,
+                    as: 'veiculo',
+                    required: false,
+                    include: [{
+                        model: ImagemVeiculo,
+                        as: 'imagemVeiculo',
+                        required: false
+                    }]
+                },
+            ],
+        });
+        if (caminhoneiro) {
+            return res.status(200).json(caminhoneiro);
+        }
+        return res.status(404).json({ message: 'Caminhoneiro not found' });
+    } catch (error) {
+        if (error instanceof Error) {
+            return res.status(500).json({ message: error.message });
+        }
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
+export const getCaminhoneiroByIdUsuario = async (req: Request<{ id: string }>, res: Response): Promise<Response> => {
     try {
         const caminhoneiro = await Caminhoneiro.findOne({
             where: { usuario_id: req.params.id },

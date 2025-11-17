@@ -1,15 +1,13 @@
 import { useCallback, useState } from "react";
-import http from "../../service/httpAxios";
 
 import { RootStackParamList } from "@/src/navigation/Routes";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/core";
+import http from "@/src/service/httpAxios";
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
-/**
- * @returns função para confirmar o frete
- */
+
 function useConfirmFreight() {
     
     const navigation = useNavigation<NavigationProp>();
@@ -37,7 +35,7 @@ function useConfirmFreight() {
         }
 
         try {
-            await http.put(`/frete/${id}`, {
+            await http.put(`fretesApi/fretes/${id}`, {
                 caminhoneiro_id: idCaminhoneiro,
             });
 
@@ -49,7 +47,7 @@ function useConfirmFreight() {
             }, 300);
 
         } catch (error) {
-            console.log(error);
+            console.error("Erro ao confirmar frete:", error);
             setSuccessVisible(false);
             setTimeout(() => {
                 setSuccess("error");

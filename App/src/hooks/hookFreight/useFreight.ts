@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 
-import http from "@/src/service/httpAxios";
 import { frete } from "@/src/interface/interfaceFreight";
+import http from "@/src/service/httpAxios";
 
 /**
  * Custom hook to fetch and manage freight data.
@@ -9,7 +9,7 @@ import { frete } from "@/src/interface/interfaceFreight";
  */
 function useFreight() {
 
-  const [freightData, setFreightData] = useState<frete[]>([]);
+  const [freightData, setFreightData] = useState<frete>();
 
   const [mensage, setMensage] = useState("");
   const [success, setSuccess] = useState(false);
@@ -28,7 +28,7 @@ function useFreight() {
     setSuccessVisible(false);
 
     try {
-      const { data } = await http.get("frete");
+      const { data } = await http.get("fretesApi/fretes");
       setFreightData(data);
     } catch (error) {
       console.error(error);

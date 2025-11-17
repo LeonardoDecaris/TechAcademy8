@@ -1,9 +1,10 @@
 import { useCallback, useState } from "react";
-import http from "../../service/httpAxios";
 
 import { useNavigation } from "@react-navigation/core";
 import { RootStackParamList } from "@/src/navigation/Routes";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import http from "@/src/service/httpAxios";
+
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
@@ -28,7 +29,7 @@ function useIniciarRota() {
         setSuccessVisible(true);
 
         try {
-            await http.put(`/frete/${id}`, {
+            await http.put(`fretesApi/fretes/${id}`, {
                 status_id: 2,
                 data_saida: new Date().toISOString(),
             });

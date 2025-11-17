@@ -28,7 +28,7 @@ function useImageUser(): UseImageUserReturn {
       const formData = new FormData();
       formData.append("imgUrl", imageData as any);
 
-      const response = await http.post<{ id_imagem: number }>("imgUsuario", formData, {
+      const response = await http.post<{ id_imagem: number }>("api/imgUsuario", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 

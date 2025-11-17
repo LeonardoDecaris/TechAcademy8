@@ -46,7 +46,7 @@ function useGetUserData() {
     setNotificationVisible(true);
 
     try {
-      const { data } = await http.get<User>(`usuario/${userId}`);
+      const { data } = await http.get<User>(`api/usuario/${userId}`);
       setUserData(data);
       setNotificationVisible(false);
     } catch (err) {

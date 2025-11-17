@@ -52,7 +52,7 @@ function useSignUp() {
       setSuccessVisible(true);
 
       try {
-        const response = await http.post("usuario", {
+        const response = await http.post("api/usuario", {
           nome: data.nome,
           cpf: data.cpf,
           email: data.email,

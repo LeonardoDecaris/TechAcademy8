@@ -1,5 +1,5 @@
 import http from "@/server/http";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 interface user {
   id_usuario: number;
@@ -16,12 +16,16 @@ function useHookGetAllUser() {
   const handleGetUser = useCallback(async () => {
     setLoading(true);
     try {
-      const { data } = await http.get("/usuario");
+      const { data } = await http.get<user[]>("api/usuario");
       setDataUser(data);
     } catch (error) {
       console.error("Error fetching all users:", error);
     } finally { setLoading(false); }
   }, []);
+
+  useEffect(() => {
+    handleGetUser();
+  }, [handleGetUser]);
 
   return {
     handleGetUser,

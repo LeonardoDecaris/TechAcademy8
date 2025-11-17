@@ -30,7 +30,7 @@ function useEditImageUser(): UseEditImageUserReturn {
       
       formData.append("imgUrl", imageData as any);
 
-      await http.put(`imgUsuario/${id}`, formData, {
+      await http.put(`api/imgUsuario/${id}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 

@@ -1,5 +1,6 @@
+import http from "@/src/service/httpAxios";
 import { useCallback, useState } from "react";
-import http from "../../service/httpAxios";
+
 
 
 interface imagemEmpresa {
@@ -85,13 +86,11 @@ function useGetFreightConfirm(id: number) {
     const getDados = useCallback(async () => {
 
         try {
-            const { data } = await http.get<frete>(`frete/caminhoneiro/${id}`);
+            const { data } = await http.get<frete>(`fretesApi/fretes/caminhoneiro/${id}`);
             setDadosFrete(data);
-
         } catch (error) {
-
-            console.log(error, 'messagem de error')
-
+            console.log("entrou no catch do getDados do frete", error);
+            console.error("erro ao buscar o frete do caminhoneiro",error);
             setSuccessVisible(false);
             setSuccess("error");
             setMensage("Erro ao carregar dados, tente novamente mais tarde.");
