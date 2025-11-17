@@ -3,6 +3,7 @@ import Frete from "../models/frete.model";
 import Status from "../models/status.model";
 import { ensureCaminhoneiroExists, ensureEmpresaExists, ensureCargaExists } from "./monolith.validation";
 import AppError from "../utils/AppError";
+import { enqueuePendingToNaoIniciado } from "../queues/freteStatus.queue";
 
 const MONOLITH_URL = process.env.MONOLITH_URL || "http://backend:3000/api";
 const CARGAS_PATH = process.env.MONOLITH_CARGAS_PATH || "/carga";
@@ -40,6 +41,13 @@ export async function createFreteService(payload: any, auth?: string) {
   await ensureCargaExists(payload.carga_id, headers);
 
   const frete = await Frete.create(payload);
+
+  // se vier como Pendente (1), agenda transição para "Não iniciado" (2)
+  const status = frete.get("status_id") as number;
+  if (status === 1) {
+    await enqueuePendingToNaoIniciado(frete.get("id_frete") as number);
+  }
+
   return frete;
 }
 
