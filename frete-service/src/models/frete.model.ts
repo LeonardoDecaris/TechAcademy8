@@ -55,6 +55,11 @@ Frete.init(
       type: DataTypes.INTEGER,
       allowNull: true,
     },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+    },
   },
   {
     sequelize,
