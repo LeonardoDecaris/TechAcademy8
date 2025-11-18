@@ -5,6 +5,7 @@ dotenv.config();
 const PORT = process.env.PORT || 3000;
 
 import { startFreteStatusWorker } from "./workers/freteStatus.worker";
+import "./config/redisClient";
 
 (async () => {
   try {

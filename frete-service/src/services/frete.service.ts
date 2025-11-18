@@ -9,6 +9,7 @@ import {
 
 import AppError from "../utils/AppError";
 import client from "../utils/monolithClient";
+import redis from "../config/redisClient";
 import { enqueuePendingToNaoIniciado } from "../queues/freteStatus.queue";
 
 const CARGAS_PATH = process.env.MONOLITH_CARGAS_PATH || "/carga";
@@ -74,14 +75,23 @@ function extractIds(data: any) {
 */
 async function fetchEntity(path: string, id?: number, headers?: Record<string, string>) {
   if (!id) return null;
+  const cacheKey = `entity:${path}:${id}`;
   try {
-    // monta a key do cache do redis
     // busca no redis
-    // valida se tinha valor, se sim retorna e adiciona no cache
+    const cached = await redis.get(cacheKey);
+    if (cached) {
+      console.log(`[CACHE HIT] ${cacheKey}`);
+      return JSON.parse(cached);
+    }
     // se nao, busca na monolith
+    console.log(`[CACHE MISS] ${cacheKey} - Buscando na monolith`);
     const { data } = await client.get(`${path}/${id}`, { headers });
+    // adiciona no cache
+    await redis.set(cacheKey, JSON.stringify(data), "EX", 60 * 1); // cache por 1 minuto
+    console.log(`[CACHE SET] ${cacheKey} - Dados adicionados ao cache`);
     return data;
-  } catch {
+  } catch (err) {
+    console.error(`[CACHE ERROR] ${cacheKey}`, err);
     return null;
   }
 }
@@ -131,13 +141,30 @@ export async function createFreteService(payload: any, auth?: string) {
 */
 export async function listFretesService(auth?: string) {
   const headers = buildHeaders(auth);
+  const cacheKey = "fretes:list";
+
+  // Busca no cache
+  const cached = await redis.get(cacheKey);
+  if (cached) {
+    console.log(`[CACHE HIT] ${cacheKey}`);
+    return JSON.parse(cached);
+  }
+
+  // Se não achou no cache, busca no banco
+  console.log(`[CACHE MISS] ${cacheKey} - Buscando no banco`);
   const fretes = await Frete.findAll({
     include: [{
       model: Status, as: "status",
       required: false
     }],
   });
-  return Promise.all(fretes.map(f => enrichFrete(f, headers)));
+  const enriched = await Promise.all(fretes.map(f => enrichFrete(f, headers)));
+
+  // Salva no cache por 1 minuto
+  await redis.set(cacheKey, JSON.stringify(enriched), "EX", 60 * 1);
+  console.log(`[CACHE SET] ${cacheKey} - Lista adicionada ao cache`);
+
+  return enriched;
 }
 
 /*
