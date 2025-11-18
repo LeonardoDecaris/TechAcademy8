@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import Carga from '../models/carga.model';
 import { includes } from 'zod';
 import ImagemCarga from '../models/imagem_carga.model';
+import TipoCarga from '../models/tipo_carga.model';
 
 export const createCarga = async (req: Request, res: Response): Promise<Response> => {
     try {
@@ -22,6 +23,11 @@ export const getAllCargas = async (req: Request, res: Response): Promise<Respons
                 model: ImagemCarga,
                 as: 'imagemCarga',
                 required: false
+            },
+            {
+                model: TipoCarga,
+                as: 'tipoCarga',
+                required: false
             }]
         });
         return res.status(200).json(cargas);
@@ -39,6 +45,11 @@ export const getCargaById = async (req: Request<{ id: string }>, res: Response):
             include: [{
                 model: ImagemCarga,
                 as: 'imagemCarga',
+                required: false
+            },
+            {
+                model: TipoCarga,
+                as: 'tipoCarga',
                 required: false
             }]
         });

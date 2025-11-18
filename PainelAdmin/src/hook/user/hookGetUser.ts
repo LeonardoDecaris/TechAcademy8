@@ -22,7 +22,7 @@ function useHookGetUser() {
   const handleGetUser = useCallback(async () => {
     try {
       setLoading(true);
-      const { data } = await http.get<User>(`usuario/${userId}`);
+      const { data } = await http.get<User>(`api/usuario/${userId}`);
       setUserData(data);
     } catch (error) {
       console.error("Error fetching user data:", error);

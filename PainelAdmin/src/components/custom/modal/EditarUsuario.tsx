@@ -33,14 +33,6 @@ const EditarUsuario = ({ children, id, nome, email, cpf, cnh }: AlertLogoutProps
                 </AlertDialogTitle>
                
                 <AlertDialogDescription>
-                    <InputCustom
-                        name="nome"
-                        label="Nome"
-                        placeholder={"nome usuario"}
-                        value={nome}
-                        error={undefined}
-                        control={undefined as any}
-                    />
                 </AlertDialogDescription>
                 <AlertDialogFooter>
                     <AlertDialogCancel className="rounded-sm">Cancelar</AlertDialogCancel>
