@@ -240,9 +240,7 @@ export async function updateFreteService(id: number, payload: any, auth?: string
   return enrichFrete(frete, headers);
 }
 
-/*
-* DESCRiÇÃO: Serviço para deletar um frete pelo seu ID.
-*/
+
 export async function deleteFreteService(id: number) {
   const frete = await Frete.findByPk(id);
   if (!frete) throw new AppError(404, "Frete não encontrado");
