@@ -8,12 +8,14 @@ type Props = {
     id?: string;
     type?: string;
     placeholder?: string;
-    value?: string;
+    defaultValue?: string;
     error: string | undefined;
     name: string;
     control: Control<any>;
     rules?: RegisterOptions;
     label?: string;
+
+    maxLength?: number;
 }
 
 const STYLE = {
@@ -27,17 +29,19 @@ const InputCustom = (props: Props) => {
             name={props.name}
             rules={props.rules}
             control={props.control}
+            defaultValue={props.defaultValue ?? ""}
             render={({ field }) => {
                 return (
                     <div>
-                        <Label className={STYLE.label} htmlFor={props.name}>{props.label}</Label> 
+                        <Label className={STYLE.label} htmlFor={props.name}>{props.label}</Label>
                         <Input
                             id={props.id}
                             type={props.type}
                             placeholder={props.placeholder}
+                            maxLength={props.maxLength}
                             {...field}
                         />
-                        {props.error && ( <span className={STYLE.span}>{props.error}</span>)}  
+                        {props.error && ( <span className={STYLE.span}>{props.error}</span>)}
                     </div>
                 );
             }}

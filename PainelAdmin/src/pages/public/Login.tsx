@@ -1,7 +1,7 @@
 import InputCustom from "@/components/custom/form/InputCustom";
 import useHookLogin from "@/hook/formLogin/HookLogin";
 import { Button } from "@/components/ui/button";
-import { loginToast } from "@/components/custom/alert/promese";
+import { loginToast } from "@/components/custom/alert/Promese";
 
 const STYLE = {
   main: "flex justify-center items-center w-full h-screen",
