@@ -73,22 +73,25 @@ function extractIds(data: any) {
 /*
 * DESCRIÇÃO: Função para buscar uma entidade relacionada.
 */
+const cacheLogSet = new Set<string>();
+
 async function fetchEntity(path: string, id?: number, headers?: Record<string, string>) {
   if (!id) return null;
   const cacheKey = `entity:${path}:${id}`;
   try {
-    // busca no redis
     const cached = await redis.get(cacheKey);
     if (cached) {
-      console.log(`[CACHE HIT] ${cacheKey}`);
+      // Não loga hit para evitar poluição
       return JSON.parse(cached);
     }
-    // se nao, busca na monolith
-    console.log(`[CACHE MISS] ${cacheKey} - Buscando na monolith`);
     const { data } = await client.get(`${path}/${id}`, { headers });
-    // adiciona no cache
-    await redis.set(cacheKey, JSON.stringify(data), "EX", 60 * 1); // cache por 1 minuto
-    console.log(`[CACHE SET] ${cacheKey} - Dados adicionados ao cache`);
+    await redis.set(cacheKey, JSON.stringify(data), "EX", 60 * 1);
+
+    // Só loga o set se ainda não logou nesta execução
+    if (!cacheLogSet.has(cacheKey)) {
+      console.log(`[CACHE SET] ${cacheKey} - Dados adicionados ao cache`);
+      cacheLogSet.add(cacheKey);
+    }
     return data;
   } catch (err) {
     console.error(`[CACHE ERROR] ${cacheKey}`, err);
@@ -142,14 +145,18 @@ export async function createFreteService(payload: any, auth?: string) {
 /* DESCRIÇÃO: Serviço para listar todos os fretes.
 */
 export async function listFretesService(auth?: string) {
+  cacheLogSet.clear(); // Limpa antes de processar a lista
+
   const headers = buildHeaders(auth);
   const cacheKey = "fretes:list";
 
   // Busca no cache
   const cached = await redis.get(cacheKey);
   if (cached) {
-    console.log(`[CACHE HIT] ${cacheKey}`);
-    return JSON.parse(cached);
+    const enriched = JSON.parse(cached);
+    const ids = enriched.map((f: any) => f.id_frete).join(", ");
+    console.log(`[CACHE HIT] ${cacheKey} - IDs retornados do cache: [${ids}]`);
+    return enriched;
   }
 
   // Se não achou no cache, busca no banco
@@ -165,7 +172,7 @@ export async function listFretesService(auth?: string) {
   // Salva no cache por 1 minuto
   const ids = enriched.map(f => f.id_frete).join(", ");
   await redis.set(cacheKey, JSON.stringify(enriched), "EX", 60 * 1);
-  console.log(`[CACHE SET] ${cacheKey} - IDs cacheados: [${ids}]`);
+  console.log(`[CACHE SET] ${cacheKey} - IDs cacheados por expiração: [${ids}]`);
 
   return enriched;
 }
@@ -225,9 +232,10 @@ export async function updateFreteService(id: number, payload: any, auth?: string
 
   // Atualiza o cache da lista e loga os IDs
   const fretes = await Frete.findAll();
-  const ids = fretes.map(f => String(f.get("id_frete"))).join(", ");
-  await redis.set("fretes:list", JSON.stringify(fretes), "EX", 60 * 1);
-  console.log(`[CACHE SET] fretes:list - IDs cacheados após UPDATE: [${ids}]`);
+  const enriched = await Promise.all(fretes.map(f => enrichFrete(f, headers)));
+  const ids = enriched.map(f => f.id_frete).join(", ");
+  await redis.set("fretes:list", JSON.stringify(enriched), "EX", 60 * 1);
+  console.log(`[CACHE SET] fretes:list - IDs cacheados por UPDATE: [${ids}]`);
 
   return enrichFrete(frete, headers);
 }

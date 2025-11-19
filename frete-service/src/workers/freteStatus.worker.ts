@@ -53,7 +53,7 @@ export function startFreteStatusWorker() {
       freteId: returnValue?.freteId,
       status_id: sid,
       status_descricao: descricao
-    });
+    }, '\n');
   });
 
   worker.on("failed", (job, err) =>
