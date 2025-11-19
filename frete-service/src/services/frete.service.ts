@@ -9,6 +9,7 @@ import {
 
 import AppError from "../utils/AppError";
 import client from "../utils/monolithClient";
+import redis from "../config/redisClient";
 import { enqueuePendingToNaoIniciado } from "../queues/freteStatus.queue";
 
 const CARGAS_PATH = process.env.MONOLITH_CARGAS_PATH || "/carga";
@@ -72,12 +73,28 @@ function extractIds(data: any) {
 /*
 * DESCRIÇÃO: Função para buscar uma entidade relacionada.
 */
+const cacheLogSet = new Set<string>();
+
 async function fetchEntity(path: string, id?: number, headers?: Record<string, string>) {
   if (!id) return null;
+  const cacheKey = `entity:${path}:${id}`;
   try {
+    const cached = await redis.get(cacheKey);
+    if (cached) {
+      // Não loga hit para evitar poluição
+      return JSON.parse(cached);
+    }
     const { data } = await client.get(`${path}/${id}`, { headers });
+    await redis.set(cacheKey, JSON.stringify(data), "EX", 60 * 1);
+
+    // Só loga o set se ainda não logou nesta execução
+    if (!cacheLogSet.has(cacheKey)) {
+      console.log(`[CACHE SET] ${cacheKey} - Dados adicionados ao cache`);
+      cacheLogSet.add(cacheKey);
+    }
     return data;
-  } catch {
+  } catch (err) {
+    console.error(`[CACHE ERROR] ${cacheKey}`, err);
     return null;
   }
 }
@@ -114,6 +131,8 @@ export async function createFreteService(payload: any, auth?: string) {
 
   const frete = await Frete.create(data);
 
+  // Removido: Invalidação e atualização do cache da lista após POST
+
   // se vier como Pendente (1), agenda transição para "Não iniciado" (2)
   const status = frete.get("status_id") as number;
   if (status === 1) {
@@ -126,14 +145,36 @@ export async function createFreteService(payload: any, auth?: string) {
 /* DESCRIÇÃO: Serviço para listar todos os fretes.
 */
 export async function listFretesService(auth?: string) {
+  cacheLogSet.clear(); // Limpa antes de processar a lista
+
   const headers = buildHeaders(auth);
+  const cacheKey = "fretes:list";
+
+  // Busca no cache
+  const cached = await redis.get(cacheKey);
+  if (cached) {
+    const enriched = JSON.parse(cached);
+    const ids = enriched.map((f: any) => f.id_frete).join(", ");
+    console.log(`[CACHE HIT] ${cacheKey} - IDs retornados do cache: [${ids}]`);
+    return enriched;
+  }
+
+  // Se não achou no cache, busca no banco
+  console.log(`[CACHE MISS] ${cacheKey} - Buscando no banco`);
   const fretes = await Frete.findAll({
     include: [{
       model: Status, as: "status",
       required: false
     }],
   });
-  return Promise.all(fretes.map(f => enrichFrete(f, headers)));
+  const enriched = await Promise.all(fretes.map(f => enrichFrete(f, headers)));
+
+  // Salva no cache por 1 minuto
+  const ids = enriched.map(f => f.id_frete).join(", ");
+  await redis.set(cacheKey, JSON.stringify(enriched), "EX", 60 * 1);
+  console.log(`[CACHE SET] ${cacheKey} - IDs cacheados por expiração: [${ids}]`);
+
+  return enriched;
 }
 
 /*
@@ -184,12 +225,22 @@ export async function updateFreteService(id: number, payload: any, auth?: string
   const frete = await Frete.findByPk(id);
   if (!frete) throw new AppError(404, "Frete não encontrado");
   await frete.update(data);
+
+  // Invalida o cache da lista após update
+  await redis.del("fretes:list");
+  console.log(`[CACHE DEL] fretes:list - Cache da lista invalidado por UPDATE`);
+
+  // Atualiza o cache da lista e loga os IDs
+  const fretes = await Frete.findAll();
+  const enriched = await Promise.all(fretes.map(f => enrichFrete(f, headers)));
+  const ids = enriched.map(f => f.id_frete).join(", ");
+  await redis.set("fretes:list", JSON.stringify(enriched), "EX", 60 * 1);
+  console.log(`[CACHE SET] fretes:list - IDs cacheados por UPDATE: [${ids}]`);
+
   return enrichFrete(frete, headers);
 }
 
-/*
-* DESCRiÇÃO: Serviço para deletar um frete pelo seu ID.
-*/
+
 export async function deleteFreteService(id: number) {
   const frete = await Frete.findByPk(id);
   if (!frete) throw new AppError(404, "Frete não encontrado");

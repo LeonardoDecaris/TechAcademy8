@@ -1,18 +1,29 @@
-import app from './app';
 import sequelize from "./config/database";
-import Status from "./models/status.model";
-import Frete from "./models/frete.model";
 import dotenv from 'dotenv';
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
 
 import { startFreteStatusWorker } from "./workers/freteStatus.worker";
+import "./config/redisClient";
+
+async function waitForDb(retries = 10, delayMs = 3000) {
+  for (let i = 1; i <= retries; i++) {
+    try {
+      await sequelize.authenticate();
+      console.log("DB ready");
+      return;
+    } catch (e) {
+      console.log(`DB not ready (tentativa ${i}/${retries})`);
+      await new Promise(r => setTimeout(r, delayMs));
+    }
+  }
+  throw new Error("DB indisponível após várias tentativas");
+}
 
 (async () => {
   try {
-    await sequelize.authenticate();
-    console.log("Frete-Service Database authenticated");
+    await waitForDb();
     await sequelize.sync();
     console.log("Frete-Service Database synchronized");
     const app = (await import("./app")).default;

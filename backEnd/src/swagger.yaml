@@ -1055,11 +1055,15 @@ components:
           type: integer
           example: 1000
         data_saida:
-          type: string
+          type: datestring
           format: date
+          pattern: '^\d{4}-\d{2}-\d{2}$'
+          example: '2025-11-18'
         data_chegada:
-          type: string
+          type: datestring
           format: date
+          pattern: '^\d{4}-\d{2}-\d{2}$'
+          example: '2025-11-23'
         prazo:
           type: integer
           example: 5
@@ -1151,9 +1155,13 @@ components:
         data_saida:
           type: string
           format: date
+          pattern: '^\d{4}-\d{2}-\d{2}$'
+          example: '2025-11-18'
         data_chegada:
           type: string
           format: date
+          pattern: '^\d{4}-\d{2}-\d{2}$'
+          example: '2025-11-23'
         prazo:
           type: integer
           example: 5
