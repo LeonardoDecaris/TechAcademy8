@@ -16,11 +16,13 @@ function useHookGetAllUser() {
   const handleGetUser = useCallback(async () => {
     setLoading(true);
     try {
-      const { data } = await http.get<user[]>("api/usuario");
+      const { data } = await http.get("api/usuario");
       setDataUser(data);
     } catch (error) {
-      console.error("Error fetching all users:", error);
-    } finally { setLoading(false); }
+      console.error("Erro ao buscar usuários:", error);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   useEffect(() => {

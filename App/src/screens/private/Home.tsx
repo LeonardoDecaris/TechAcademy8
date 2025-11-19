@@ -55,7 +55,6 @@ const { logout } = useAuth();
         successVisible,
         dadosFrete
     } = useGetFreightConfirm(caminhoneiroId || 0);
-    console.log(dadosFrete, 'dadosFrete Home');
 
     const [refreshing, setRefreshing] = useState(false);
     const [isLogoutModalVisible, setLogoutModalVisible] = useState(false);
