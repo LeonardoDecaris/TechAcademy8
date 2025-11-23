@@ -1,18 +1,29 @@
+import { z } from 'zod';
 import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
-import { z } from 'zod';
-import { createUserSchema } from '../schemas/UsuarioValidation.schemas';
 
+import sequelize from '../config/database';
 import Usuario from '../models/usuario.model';
+import Caminhoneiro from '../models/caminhoneiro.model';
 import ImagemUsuario from '../models/imagem_usuario.model';
+import { createUserSchema } from '../schemas/UsuarioValidation.schemas';
 
 
 export const createUsuario = async (req: Request, res: Response) => {
+    const t = await sequelize.transaction();
     try {
         const parsed = await createUserSchema.parseAsync(req.body);
-        const usuario = await Usuario.create(parsed);
-        return res.status(201).json(usuario);
+        const usuario = await Usuario.create(parsed, { transaction: t });
+
+        const caminhoneiro = await Caminhoneiro.create(
+            { usuario_id: usuario.id_usuario },
+            { transaction: t }
+        );
+
+        await t.commit();
+        return res.status(201).json({ usuario, caminhoneiro });
     } catch (error) {
+        await t.rollback();
         if (error instanceof z.ZodError) {
             console.log(error);
             return res.status(400).json({ errors: error.issues });
@@ -23,6 +34,7 @@ export const createUsuario = async (req: Request, res: Response) => {
         return res.status(500).json({ message: 'Erro interno do servidor.' });
     }
 };
+
 
 export const getAllUsuarios = async (req: Request, res: Response) => {
     try {
@@ -185,3 +197,6 @@ export const resetPassword = async (req: Request, res: Response) => {
         return res.status(500).json({ message: 'Erro interno do servidor.' });
     }
 };
+
+
+

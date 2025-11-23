@@ -39,7 +39,7 @@ const STYLES = {
 
 const Home = () => {
 
-const { logout } = useAuth();
+const { logout} = useAuth();
     const navigation = useNavigation<NavigationProp>();
     const insets = useSafeAreaInsets();
 

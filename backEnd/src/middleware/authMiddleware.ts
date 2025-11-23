@@ -90,14 +90,16 @@ export const authMiddlewareUserOrAdmin = ({id_usuario}: {id_usuario: string}) =>
     const isIdParam = Number(req.params[id_usuario]);
 
     if (!isIdParam) {
+      console.log("Chave enviada é invalido");
       return res.status(401).json({ mensage: "Chave enviada é invalido" });
     }
 
     if (!isIdParam) {
+      console.log("Id do parametro é invalido");
       return res.status(401).json({ mensage: "Id do Usuario nao foi informado" });
     }
 
-
+    console.log("isIdToken:", isIdToken, "isIdParam:", isIdParam, "isAdmin:", isAdmin);
     if (!isAdmin && isIdToken !== isIdParam) {
       return res.status(403).json({
         message: "Acesso negado. Você só pode acessar o próprio recurso.",

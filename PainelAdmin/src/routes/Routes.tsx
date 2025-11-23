@@ -9,6 +9,7 @@ import ErroSemAcesso from "@/pages/pagesAcesso/ErroSemAcesso";
 import PrivateRoute from "./PrivateRoutes";
 import ListaUsuario from "@/pages/auth/ListaUsuario";
 import { AuthProvider } from "@/context/AuthContext";
+import ListaFretes from "@/pages/auth/ListaFretes";
 
 const ROUTES_HEADER = ["/", "/sem-acesso", "/*"];
 
@@ -28,6 +29,11 @@ const WebRoutes = () => {
                     <Route path="/usuarios" element={
                         <PrivateRoute>
                             <ListaUsuario />
+                        </PrivateRoute>
+                    } />
+                    <Route path="/fretes" element={
+                        <PrivateRoute>
+                            <ListaFretes />
                         </PrivateRoute>
                     } />
 

@@ -24,6 +24,7 @@ function useHookGetUser() {
       setLoading(true);
       const { data } = await http.get<User>(`api/usuario/${userId}`);
       setUserData(data);
+      console.log("User data fetched:");
     } catch (error) {
       console.error("Error fetching user data:", error);
       setMessage("Failed to fetch user data.");

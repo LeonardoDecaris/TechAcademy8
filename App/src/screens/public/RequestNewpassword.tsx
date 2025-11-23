@@ -8,7 +8,6 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import InputAuth from '@/src/components/form/InputAuth';
 import { ButtonPadrao } from '@/src/components/form/Buttons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import AlertNotioncation from '@/src/components/modal/AlertNotioncation';
 import useRequestNewpassword from '@/src/hooks/hookAuth/useRequestNewpassword';
 import AlertNotification from '@/src/components/modal/AlertNotification';
 

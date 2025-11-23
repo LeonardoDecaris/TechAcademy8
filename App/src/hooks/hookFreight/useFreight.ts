@@ -31,7 +31,7 @@ function useFreight() {
       const { data } = await http.get("fretesApi/fretes");
       setFreightData(data);
     } catch (error) {
-      console.error(error);
+      console.error("erro ao buscar dados de frete", error);
       setMensage("Erro ao buscar dados de frete.");
       setSuccess(false);
       setSuccessVisible(true);

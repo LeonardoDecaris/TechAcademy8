@@ -135,3 +135,8 @@ export const formatBRL = (raw: string | number | undefined) => {
     const valor = num.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     return `R$ ${valor}`;
 };
+
+  export const formatCpf = (cpf: string) => {
+    const digits = cpf.replace(/\D/g, '').padStart(11, '0').slice(0, 11);
+    return digits.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+  };

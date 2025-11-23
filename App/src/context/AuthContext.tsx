@@ -12,7 +12,6 @@ interface TokenPayload {
 interface AuthContextType {
   token: string | null;
   userId: string | null;
-  userName: string | null;
   userAdmin: boolean | null;
   isAuthenticated: boolean;
 
@@ -35,7 +34,6 @@ const decodeToken = (token: string): Omit<TokenPayload, 'user'> | null => {
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [token, setToken] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
-  const [userName, setUserName] = useState<string | null>(null);
   const [userAdmin, setUserAdmin] = useState<boolean | null>(null);
 
   useEffect(() => {
@@ -46,7 +44,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         if (userData) {
             setToken(storedToken);
             setUserId(userData.id_usuario);
-            setUserName(userData.nome);
             setUserAdmin(userData.admin);
         }
       }
@@ -59,7 +56,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const userData = decodeToken(token);
     if (userData) {
       setUserId(userData.id_usuario);
-      setUserName(userData.nome);
       setUserAdmin(userData.admin);
     }
     setToken(token);
@@ -69,12 +65,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     await SecureStore.deleteItemAsync("authToken");
     setToken(null);
     setUserId(null);
-    setUserName(null);
     setUserAdmin(null);
   };
 
   return (
-    <AuthContext.Provider value={{ token, userId, userName, userAdmin, login, logout, isAuthenticated: !!token }}>
+    <AuthContext.Provider value={{ token, userId, userAdmin, login, logout, isAuthenticated: !!token }}>
       {children}
     </AuthContext.Provider>
   );

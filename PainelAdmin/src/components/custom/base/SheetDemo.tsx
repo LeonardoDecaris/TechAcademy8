@@ -9,7 +9,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 
-import AlertLogout from "../modal/logout"
+import AlertLogout from "../modal/modalUsuario/logout"
 import { Link } from "react-router-dom"
 import useHookGetUser from "@/hook/user/hookGetUser";
 import { useEffect } from "react";
@@ -53,11 +53,6 @@ const BarraLateral = () => {
             <li className="font-bold text-black/70 transition hover:text-black hover:scale-101">
               <SheetClose asChild>
                 <Link to="/fretes">Controle de Fretes</Link>
-              </SheetClose>
-            </li>
-            <li className="font-bold text-black/70 transition hover:text-black hover:scale-101">
-              <SheetClose asChild>
-                <Link to="/">Controle de Estoque</Link>
               </SheetClose>
             </li>
           </ul>
