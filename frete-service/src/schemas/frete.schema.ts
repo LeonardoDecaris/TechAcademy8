@@ -12,6 +12,7 @@ export const baseFreteSchema = z.object({
   empresa_id: z.number().int().optional(),
   carga_id: z.number().int().optional(),
   caminhoneiro_id: z.number().int().nullable().optional(),
+  created_at: z.date().optional(),  
 }).strict();
 
 export const updateFreteSchema = baseFreteSchema;

@@ -84,12 +84,13 @@ function useGetFreightConfirm(id: number) {
     }, []);
 
     const getDados = useCallback(async () => {
-
+        if(!id) {
+            console.error("ID do frete não fornecido.");
+        }
         try {
             const { data } = await http.get<frete>(`fretesApi/fretes/caminhoneiro/${id}`);
             setDadosFrete(data);
         } catch (error) {
-            console.log("entrou no catch do getDados do frete", error);
             console.error("erro ao buscar o frete do caminhoneiro",error);
             setSuccessVisible(false);
             setSuccess("error");

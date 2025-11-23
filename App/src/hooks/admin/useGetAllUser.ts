@@ -6,8 +6,6 @@ interface User {
     nome: string;
     cpf: string;
     email: string;
-    password: string;
-    confirmaSenha: string;
     cnh: string;
 }
 
@@ -20,7 +18,7 @@ function useGetAllUser() {
         setLoading(true);
         setError(false);
         try {
-            const response = await http.get('/usuario');
+            const response = await http.get('api/usuario');
             setUserData(response.data);
         } catch (error) {
             setError(true);

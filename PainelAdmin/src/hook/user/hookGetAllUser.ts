@@ -18,6 +18,7 @@ function useHookGetAllUser() {
     try {
       const { data } = await http.get("api/usuario");
       setDataUser(data);
+      console.log("Usuários buscados com sucesso.");
     } catch (error) {
       console.error("Erro ao buscar usuários:", error);
     } finally {

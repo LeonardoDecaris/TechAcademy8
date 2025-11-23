@@ -8,9 +8,10 @@ import {
     AlertDialogDescription
 } from "@/components/ui/alert-dialog";
 
-import InputCustom from "../form/InputCustom";
+import InputCustom from "../../form/InputCustom";
 import { Button } from "@/components/ui/button";
 import useHookPutUser from "@/hook/user/hookPutUser";
+import { useState } from "react";
 
 type AlertLogoutProps = {
     children: React.ReactNode;
@@ -19,23 +20,35 @@ type AlertLogoutProps = {
     email: string;
     cpf: string;
     cnh: string;
+    onUpdate: () => void;
 };
 
-const EditarUsuario = ({ children, nome, email, cpf, cnh }: AlertLogoutProps) => {
-    const { control, errors, handlePutUser, handleSubmit, rules, loading } = useHookPutUser();
+const EditarUsuario = ({ children, id, nome, email, cpf, cnh, onUpdate }: AlertLogoutProps) => {
+    const { control, errors, handlePutUser, handleSubmit, rules, loading } = useHookPutUser({ idUser: id });
+    const [open, setOpen] = useState(false);
+
+    const handleAtualizaPut = async (data: any) => {
+        const success = await handlePutUser(data);
+        if (success) {
+            if (onUpdate) {
+                onUpdate();
+            }
+            setOpen(false);
+        }
+    };
 
     return (
-        <AlertDialog>
+        <AlertDialog open={open} onOpenChange={setOpen}>
             <AlertDialogTrigger asChild>
                 {children}
             </AlertDialogTrigger>
 
             <AlertDialogContent>
                 <AlertDialogTitle>
-                    Confirmar Logout
+                    Editar: {nome}
                 </AlertDialogTitle>
 
-                <form id="form" onSubmit={handleSubmit(handlePutUser)} className="flex flex-col gap-4 mt-4">
+                <form id="form" onSubmit={handleSubmit(handleAtualizaPut)} className="flex flex-col gap-4 mt-4">
                     <InputCustom
                         name="nome"
                         label="Nome"
@@ -86,7 +99,7 @@ const EditarUsuario = ({ children, nome, email, cpf, cnh }: AlertLogoutProps) =>
                         id="cnh"
                         type="text"
                         defaultValue={cnh}
-                        placeholder="Digite a CNH"
+                        placeholder="Digite o tipo da CNH "
                         control={control}
                         rules={rules.cnh}
                         error={errors.cnh?.message}
@@ -101,7 +114,7 @@ const EditarUsuario = ({ children, nome, email, cpf, cnh }: AlertLogoutProps) =>
                     <Button type="submit" form="form" className="rounded-sm" disabled={loading}>
                         {loading ? "Salvando..." : "Salvar"}
                     </Button>
-                    
+
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>
