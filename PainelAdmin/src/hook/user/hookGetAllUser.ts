@@ -1,12 +1,18 @@
 import http from "@/server/http";
 import { useCallback, useEffect, useState } from "react";
 
+interface imagem {
+  id_imagem: number;
+  imgUrl: string;
+}
 interface user {
   id_usuario: number;
   nome: string;
   email: string;
   cpf: string;
   cnh: string;
+  imagemUsuario_id: number | null;
+  imagemUsuario: imagem | null;
 }
 
 function useHookGetAllUser() {

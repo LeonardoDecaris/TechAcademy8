@@ -12,9 +12,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import useHookGetAllUser from "@/hook/user/hookGetAllUser";
+import http from "@/server/http";
 import { formatCpf } from "@/util/funcoes";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { AiOutlineDelete } from "react-icons/ai";
 
 type FormValues = {
   pesquisa: string;
@@ -26,7 +28,13 @@ interface userData {
   email: string;
   cpf: string;
   cnh: string;
+  imagemUsuario_id: number | null;
+  imagemUsuario: {
+    id_imagem: number;
+    imgUrl: string;
+  } | null;
 }
+
 
 function ListaUsuario() {
   const { dataUser, loading, handleGetUser } = useHookGetAllUser();
@@ -47,7 +55,7 @@ function ListaUsuario() {
   }, [dataUser]);
 
   return (
-    <main className="flex-1 m-auto h-screen max-w-[1200px] py-5 ">
+    <main className="flex-1 m-auto h-screen max-w-[1400px] py-5 ">
       <h1 className="text-black text-center text-3xl font-bold mb-6">Controle de Usuários</h1>
 
       <form onSubmit={handleSubmit(pesquisarUsuario)} className="w-full justify-center flex mb-6 gap-4">
@@ -103,12 +111,12 @@ function ListaUsuario() {
                     <div className="flex justify-end items-center gap-2">
                       <EditarUsuario id={user.id_usuario} nome={user.nome} email={user.email} cpf={user.cpf} cnh={user.cnh} onUpdate={handleGetUser}>
                         <button className="bg-black text-white text-sm font-semibold rounded-sm px-2 py-1 cursor-pointer hover:bg-black/80 transition-colors">
-                          editar
+                          Editar
                         </button>
                       </EditarUsuario>
                       <DeleteUser idUser={user.id_usuario.toString()} onUpdate={handleGetUser}>
                         <button className="bg-red-500 text-sm text-white font-semibold rounded-sm px-2 py-1 cursor-pointer hover:bg-red-600 transition-colors">
-                          excluir
+                          <AiOutlineDelete size={24} />
                         </button>
                       </DeleteUser>
                     </div>
