@@ -1,8 +1,7 @@
 import dotenv from 'dotenv';
-dotenv.config();
-
 import jwt from "jsonwebtoken";
 import Usuario from "../models/usuario.model";
+dotenv.config();
 
 const JWT_SECRET = process.env.JWT_SECRET!
 const JWT_EXPIRES_IN = "7d"

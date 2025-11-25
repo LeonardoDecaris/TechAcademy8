@@ -21,8 +21,6 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => { res.send("Hello World!"); });
-
-// prefixo /api para todas as rotas do monolito
 app.use('/api', cargaRoutes);
 app.use('/api', caminhoneiroRoutes);
 app.use('/api', empresaRoutes);

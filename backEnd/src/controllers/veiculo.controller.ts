@@ -76,10 +76,6 @@ export const deleteVeiculo = async (req: Request, res: Response) => {
     }
 };
 
-/**
- * GET /usuario/:usuarioId/veiculo
- * Retorna o veículo vinculado ao usuário (caminhoneiro.veiculo_id)
- */
 export const getVeiculoByUsuarioId = async (req: Request, res: Response) => {
   const { usuarioId } = req.params;
   try {
@@ -101,10 +97,6 @@ export const getVeiculoByUsuarioId = async (req: Request, res: Response) => {
   }
 };
 
-/**
- * POST /usuario/:usuarioId/veiculo
- * Cria um novo veículo e vincula ao usuário (caminhoneiro). Atômico.
- */
 export const createVeiculoByUsuarioId = async (req: Request, res: Response) => {
   const { usuarioId } = req.params;
   const { marca, modelo, placa, quilometragem, ano, capacidade, imagemVeiculo_id, tipoCargaIds } =
@@ -144,10 +136,6 @@ export const createVeiculoByUsuarioId = async (req: Request, res: Response) => {
   }
 };
 
-/**
- * PUT /usuario/:usuarioId/veiculo/:id
- * Atualiza o veículo por ID. Valida que o veículo pertence ao usuário.
- */
 export const updateVeiculoByUsuarioId = async (req: Request, res: Response) => {
   const { usuarioId, id } = req.params;
   try {

@@ -36,7 +36,6 @@ const storage = multer.diskStorage({
   }
 });
 
-
 export const uploadSingleImage = (fieldName: string) => multer({ 
   storage,
   fileFilter,

@@ -47,7 +47,6 @@ Veiculo.init({
         type: DataTypes.INTEGER,
         allowNull: true,
     },
-
 }, {
     sequelize,
     tableName: 'VEICULO',

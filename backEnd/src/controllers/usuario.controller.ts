@@ -1,7 +1,6 @@
 import { z } from 'zod';
 import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
-
 import sequelize from '../config/database';
 import Usuario from '../models/usuario.model';
 import Caminhoneiro from '../models/caminhoneiro.model';

@@ -90,7 +90,6 @@ export const deleteImagemCarga = async (req: Request, res: Response) => {
                 fs.unlinkSync(imagePath);
             }
         }
-
         await imagem.destroy();
         return res.status(204).send();
     } catch (error) {
