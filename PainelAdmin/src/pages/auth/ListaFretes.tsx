@@ -14,6 +14,8 @@ import { Button } from "@/components/ui/button";
 import type { frete } from "@/interface/interfaceFretes";
 import useHookGetAllFretes from "@/hook/fretes/hookGetAllFretes";
 import CadastroUser from "@/components/custom/modal/modalUsuario/CadastroUser";
+import { AiOutlineDelete } from "react-icons/ai";
+import DeleteFretes from "@/components/custom/modal/modalFretes/DeleteFretes";
 
 type FormValues = {
 	pesquisa: string;
@@ -46,7 +48,7 @@ function ListaFretes() {
 	};
 
 	return (
-		<main className="flex-1 m-auto h-screen max-w-[1200px] py-5 ">
+		<main className="flex-1 m-auto h-screen max-w-[1400px] py-5 ">
 			<h1 className="text-black text-center text-3xl font-bold mb-6">Lista de Fretes</h1>
 
 			<form onSubmit={handleSubmit(pesquisarFrete)} className="w-full justify-center flex mb-6 gap-4">
@@ -71,12 +73,15 @@ function ListaFretes() {
 					<TableHeader>
 						<TableRow>
 							<TableHead className="w-[50px]">ID</TableHead>
-							<TableHead>Carga</TableHead>
+							<TableHead>Nome</TableHead>
 							<TableHead>Tipo Carga</TableHead>
 							<TableHead>Empresa</TableHead>
 							<TableHead>Rota Frete</TableHead>
-							<TableHead>Valor</TableHead>
+							<TableHead>Frete.V</TableHead>
+							<TableHead>Carga.V</TableHead>
+							<TableHead>Peso</TableHead>
 							<TableHead>Status</TableHead>
+							<TableHead>Caminhoneiro</TableHead>
 							<TableHead className="text-right">Ações</TableHead>
 						</TableRow>
 					</TableHeader>
@@ -102,15 +107,20 @@ function ListaFretes() {
 									<TableCell>{frete.empresa.nome}</TableCell>
 									<TableCell>{frete.saida} ➝ {frete.destino}</TableCell>
 									<TableCell>R$ {frete.valor_frete}</TableCell>
+									<TableCell>R$ {frete.carga.valor_carga}</TableCell>
+									<TableCell>T {frete.carga.peso}</TableCell>
 									<TableCell>{frete.status.descricao}</TableCell>
+									<TableCell>{frete.caminhoneiro?.usuario?.nome ?? "Sem Caminhoneiro"}</TableCell>
 									<TableCell className="text-right">
 										<div className="flex justify-end items-center gap-2">
 											<button className="bg-black text-white text-sm font-semibold rounded-sm px-2 py-1 cursor-pointer hover:bg-black/80 transition-colors">
-												editar
+												Editar
 											</button>
-											<button className="bg-red-500 text-sm text-white font-semibold rounded-sm px-2 py-1 cursor-pointer hover:bg-red-600 transition-colors">
-												excluir
-											</button>
+											<DeleteFretes onUpdate={handleGetAllFreights} idFretes={frete.id_frete}>
+												<button className="bg-red-500 text-sm text-white font-semibold rounded-sm px-2 py-1 cursor-pointer hover:bg-red-600 transition-colors">
+													<AiOutlineDelete size={24} />
+												</button>
+											</DeleteFretes>
 										</div>
 									</TableCell>
 								</TableRow>

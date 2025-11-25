@@ -32,6 +32,11 @@ export const getAllCaminhoneiros = async (req: Request, res: Response): Promise<
                         required: false
                     }]
                 },
+                {
+                    model: Usuario,
+                    as: 'usuario',
+                    required: false
+                }
             ],
         });
         return res.status(200).json(caminhoneiros);
@@ -57,6 +62,11 @@ export const getCaminhoneiroById = async (req: Request<{ id: string }>, res: Res
                         required: false
                     }]
                 },
+                {
+                    model: Usuario,
+                    as: 'usuario',
+                    required: false
+                }
             ],
         });
         if (caminhoneiro) {
@@ -86,6 +96,11 @@ export const getCaminhoneiroByIdUsuario = async (req: Request<{ id: string }>, r
                         required: false
                     }]
                 },
+                {
+                    model: Usuario,
+                    as: 'usuario',
+                    required: false
+                }
             ],
         });
         if (caminhoneiro) {

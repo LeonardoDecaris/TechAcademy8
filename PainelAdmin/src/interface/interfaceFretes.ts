@@ -42,10 +42,17 @@ interface status {
   descricao: string;
 }
 
+interface usuario {
+  id_usuario: number;
+  nome: string;
+}
+
 interface caminhoneiro {
   id_caminhoneiro: number;
   usuario_id: number;
   veiculo_id: number;
+
+  usuario: usuario | null;
 }
 
 export interface frete {
