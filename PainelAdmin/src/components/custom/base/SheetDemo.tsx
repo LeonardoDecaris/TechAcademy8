@@ -55,6 +55,12 @@ const BarraLateral = () => {
                 <Link to="/fretes">Controle de Fretes</Link>
               </SheetClose>
             </li>
+        
+            <li className="font-bold text-black/70 transition hover:text-black hover:scale-101">
+              <SheetClose asChild>
+                <Link to="/empresas">Controle de Empresas</Link>
+              </SheetClose>
+            </li>
           </ul>
         </section>
 

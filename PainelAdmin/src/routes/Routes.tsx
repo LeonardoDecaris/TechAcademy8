@@ -10,6 +10,7 @@ import PrivateRoute from "./PrivateRoutes";
 import ListaUsuario from "@/pages/auth/ListaUsuario";
 import { AuthProvider } from "@/context/AuthContext";
 import ListaFretes from "@/pages/auth/ListaFretes";
+import ListaEmpresa from "@/pages/auth/ListaEmpresa";
 
 const ROUTES_HEADER = ["/", "/sem-acesso", "/*"];
 
@@ -34,6 +35,11 @@ const WebRoutes = () => {
                     <Route path="/fretes" element={
                         <PrivateRoute>
                             <ListaFretes />
+                        </PrivateRoute>
+                    } />
+                    <Route path="/empresas" element={
+                        <PrivateRoute>
+                            <ListaEmpresa />
                         </PrivateRoute>
                     } />
 

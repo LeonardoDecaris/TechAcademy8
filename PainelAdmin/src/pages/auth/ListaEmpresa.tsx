@@ -11,45 +11,43 @@ import {
 
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import type { frete } from "@/interface/interfaceFretes";
-import useHookGetAllFretes from "@/hook/fretes/hookGetAllFretes";
+import type { empresa } from "@/hook/empresa/hookGetAllEmpresa";
 import CadastroUser from "@/components/custom/modal/modalUsuario/CadastroUser";
 import { AiOutlineDelete } from "react-icons/ai";
 import DeleteFretes from "@/components/custom/modal/modalFretes/DeleteFretes";
+import useHookGetAllEmpresa from "@/hook/empresa/hookGetAllEmpresa";
+import CadastroEmpresa from "@/components/custom/modal/modalEmpresa/CadastroEmpresa";
 
 type FormValues = {
 	pesquisa: string;
 };
 
-function ListaFretes() {
+function ListaEmpresa() {
 
 	const { register, handleSubmit } = useForm<FormValues>();
-	const [filteredFretes, setFilteredFretes] = useState<frete[]>([]);
-	const { fretesData, loading, handleGetAllFreights } = useHookGetAllFretes();
+	const [filteredFretes, setFilteredFretes] = useState<empresa[]>([])
+    const { empresaData, loading, handleGetAllEmpresas} = useHookGetAllEmpresa();
 
 	useEffect(() => {
-		if (fretesData) {
-			setFilteredFretes(fretesData);
+		if (empresaData) {
+			setFilteredFretes(empresaData);
 		}
-	}, [fretesData]);
+	}, [empresaData]);
 
 	const pesquisarFrete = (data: { pesquisa: string }) => {
 		const termo = data.pesquisa.toLowerCase();
 
-		if (!fretesData) return;
+		if (!empresaData) return;
 
-		const filtrados = fretesData.filter((item: frete) =>
-			item.empresa.nome.toLowerCase().includes(termo) ||
-			item.carga.nome.toLowerCase().includes(termo) ||
-			item.saida.toLowerCase().includes(termo) ||
-			item.destino.toLowerCase().includes(termo)
+		const filtrados = empresaData.filter((item: empresa) =>
+			item.nome.toLowerCase().includes(termo)
 		);
 		setFilteredFretes(filtrados);
 	};
 
 	return (
 		<main className="flex-1 m-auto h-screen max-w-[1400px] py-5 ">
-			<h1 className="text-black text-center text-3xl font-bold mb-6">Lista de Fretes</h1>
+			<h1 className="text-black text-center text-3xl font-bold mb-6">Lista de Empresas</h1>
 
 			<form onSubmit={handleSubmit(pesquisarFrete)} className="w-full justify-center flex mb-6 gap-4">
 				<input
@@ -62,8 +60,11 @@ function ListaFretes() {
 					Buscar
 				</button>
 			</form>
-			<div className="flex justify-start items-center py-2.5 px-2">
-				<h4 className="font-semibold">Lista de Fretes</h4>
+			<div className="flex justify-between items-center py-2.5 px-2">
+				<h4 className="font-semibold">Lista de Empresas</h4>
+				<CadastroEmpresa onUpdate={handleGetAllEmpresas}>
+					<Button className="cursor-pointer">Cadastrar Empresa</Button>
+				</CadastroEmpresa>
 			</div>
 			<div className="rounded-md border bg-white shadow-sm">
 				<Table>
@@ -71,49 +72,39 @@ function ListaFretes() {
 						<TableRow>
 							<TableHead className="w-[50px]">ID</TableHead>
 							<TableHead>Nome</TableHead>
-							<TableHead>Tipo Carga</TableHead>
-							<TableHead>Empresa</TableHead>
-							<TableHead>Rota Frete</TableHead>
-							<TableHead>Frete.V</TableHead>
-							<TableHead>Carga.V</TableHead>
-							<TableHead>Peso</TableHead>
-							<TableHead>Status</TableHead>
-							<TableHead>Caminhoneiro</TableHead>
+                            <TableHead>CNPJ</TableHead>
+                            <TableHead>Localidade</TableHead>
+                            <TableHead>Avaliação</TableHead>
 							<TableHead className="text-right">Ações</TableHead>
 						</TableRow>
 					</TableHeader>
 					<TableBody>
 						{loading ? (
 							<TableRow>
-								<TableCell colSpan={11} className="text-center h-24 text-muted-foreground">
+								<TableCell colSpan={8} className="text-center h-24 text-muted-foreground">
 									Carregando...
 								</TableCell>
 							</TableRow>
 						) : filteredFretes.length === 0 ? (
 							<TableRow>
-								<TableCell colSpan={11} className="text-center h-24 text-muted-foreground">
+								<TableCell colSpan={8} className="text-center h-24 text-muted-foreground">
 									Nenhum frete encontrado.
 								</TableCell>
 							</TableRow>
 						) : (
-							filteredFretes.map((frete) => (
-								<TableRow key={frete.id_frete}>
-									<TableCell className="font-medium">{frete.id_frete}</TableCell>
-									<TableCell>{frete.carga.nome}</TableCell>
-									<TableCell>{frete.carga.tipoCarga.nome}</TableCell>
-									<TableCell>{frete.empresa.nome}</TableCell>
-									<TableCell>{frete.saida} ➝ {frete.destino}</TableCell>
-									<TableCell>R$ {frete.valor_frete}</TableCell>
-									<TableCell>R$ {frete.carga.valor_carga}</TableCell>
-									<TableCell>T {frete.carga.peso}</TableCell>
-									<TableCell>{frete.status.descricao}</TableCell>
-									<TableCell>{frete.caminhoneiro?.usuario?.nome ?? "Sem Caminhoneiro"}</TableCell>
+							filteredFretes.map((empresa) => (
+								<TableRow key={empresa.id_empresa}>
+									<TableCell className="font-medium">{empresa.id_empresa}</TableCell>
+									<TableCell>{empresa.nome}</TableCell>
+                                    <TableCell>{empresa.cnpj}</TableCell>
+                                    <TableCell>{empresa.localidade}</TableCell>
+                                    <TableCell>{empresa.avaliacao || 'N/A'}</TableCell>
 									<TableCell className="text-right">
 										<div className="flex justify-end items-center gap-2">
 											<button className="bg-black text-white text-sm font-semibold rounded-sm px-2 py-1 cursor-pointer hover:bg-black/80 transition-colors">
 												Editar
 											</button>
-											<DeleteFretes onUpdate={handleGetAllFreights} idFretes={frete.id_frete}>
+											<DeleteFretes onUpdate={handleGetAllEmpresas} idFretes={empresa.id_empresa}>
 												<button className="bg-red-500 text-sm text-white font-semibold rounded-sm px-2 py-1 cursor-pointer hover:bg-red-600 transition-colors">
 													<AiOutlineDelete size={24} />
 												</button>
@@ -126,7 +117,7 @@ function ListaFretes() {
 					</TableBody>
 					<TableFooter className="bg-transparent">
 						<TableRow>
-							<TableCell colSpan={11} className="text-center font-medium">
+							<TableCell colSpan={8} className="text-center font-medium">
 								Total de Fretes: {filteredFretes.length}
 							</TableCell>
 						</TableRow>
@@ -137,4 +128,4 @@ function ListaFretes() {
 	);
 }
 
-export default ListaFretes;
+export default ListaEmpresa;

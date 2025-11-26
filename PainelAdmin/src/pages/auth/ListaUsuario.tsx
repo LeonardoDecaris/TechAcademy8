@@ -12,7 +12,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import useHookGetAllUser from "@/hook/user/hookGetAllUser";
-import http from "@/server/http";
 import { formatCpf } from "@/util/funcoes";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -91,11 +90,11 @@ function ListaUsuario() {
           <TableBody>
             {loading ? (
               <TableRow>
-                <TableCell colSpan={6} className="text-center h-24 text-muted-foreground">Carregando usuários...</TableCell>
+                <TableCell colSpan={7} className="text-center h-24 text-muted-foreground">Carregando usuários...</TableCell>
               </TableRow>
             ) : filteredUsers.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={6} className="text-center h-24 text-muted-foreground">
+                <TableCell colSpan={7} className="text-center h-24 text-muted-foreground">
                   Nenhum usuário encontrado.
                 </TableCell>
               </TableRow>
@@ -127,7 +126,7 @@ function ListaUsuario() {
           </TableBody>
           <TableFooter className="bg-transparent ">
             <TableRow>
-              <TableCell colSpan={6} className="text-start font-medium">
+              <TableCell colSpan={7} className="text-center font-medium">
                 Total de Usuários: {filteredUsers.length}
               </TableCell>
             </TableRow>
