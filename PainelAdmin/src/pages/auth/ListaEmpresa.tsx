@@ -17,6 +17,7 @@ import { AiOutlineDelete } from "react-icons/ai";
 import DeleteFretes from "@/components/custom/modal/modalFretes/DeleteFretes";
 import useHookGetAllEmpresa from "@/hook/empresa/hookGetAllEmpresa";
 import CadastroEmpresa from "@/components/custom/modal/modalEmpresa/CadastroEmpresa";
+import { mascaraCNPJ } from "@/util/validacoes";
 
 type FormValues = {
 	pesquisa: string;
@@ -74,6 +75,7 @@ function ListaEmpresa() {
 							<TableHead>Nome</TableHead>
                             <TableHead>CNPJ</TableHead>
                             <TableHead>Localidade</TableHead>
+                            <TableHead>Tipo</TableHead>
                             <TableHead>Avaliação</TableHead>
 							<TableHead className="text-right">Ações</TableHead>
 						</TableRow>
@@ -81,13 +83,13 @@ function ListaEmpresa() {
 					<TableBody>
 						{loading ? (
 							<TableRow>
-								<TableCell colSpan={8} className="text-center h-24 text-muted-foreground">
+								<TableCell colSpan={9} className="text-center h-24 text-muted-foreground">
 									Carregando...
 								</TableCell>
 							</TableRow>
 						) : filteredFretes.length === 0 ? (
 							<TableRow>
-								<TableCell colSpan={8} className="text-center h-24 text-muted-foreground">
+								<TableCell colSpan={9} className="text-center h-24 text-muted-foreground">
 									Nenhum frete encontrado.
 								</TableCell>
 							</TableRow>
@@ -96,8 +98,9 @@ function ListaEmpresa() {
 								<TableRow key={empresa.id_empresa}>
 									<TableCell className="font-medium">{empresa.id_empresa}</TableCell>
 									<TableCell>{empresa.nome}</TableCell>
-                                    <TableCell>{empresa.cnpj}</TableCell>
+                                    <TableCell>{mascaraCNPJ(empresa.cnpj)}</TableCell>
                                     <TableCell>{empresa.localidade}</TableCell>
+									<TableCell>{empresa.tipo}</TableCell>
                                     <TableCell>{empresa.avaliacao || 'N/A'}</TableCell>
 									<TableCell className="text-right">
 										<div className="flex justify-end items-center gap-2">
