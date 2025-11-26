@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation,} from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation, } from "react-router-dom";
 
 import Login from "@/pages/public/Login";
 import Header from "@/components/custom/base/Header";
@@ -6,21 +6,50 @@ import Header from "@/components/custom/base/Header";
 import Home from "@/pages/auth/Home";
 import Erro404 from "@/pages/pagesAcesso/Erro404";
 import ErroSemAcesso from "@/pages/pagesAcesso/ErroSemAcesso";
+import PrivateRoute from "./PrivateRoutes";
+import ListaUsuario from "@/pages/auth/ListaUsuario";
+import { AuthProvider } from "@/context/AuthContext";
+import ListaFretes from "@/pages/auth/ListaFretes";
+import ListaEmpresa from "@/pages/auth/ListaEmpresa";
 
-const ROUTES_HEADER = ["/", "/sem-acesso","/*"];
+const ROUTES_HEADER = ["/", "/sem-acesso", "/*"];
 
 const WebRoutes = () => {
     return (
         <BrowserRouter>
-        <HeaderWrapper />
-            <Routes >
+            <AuthProvider>
 
-                <Route path="/home" element={<Home />} />
-                <Route path="/" element={<Login />} />
+                <HeaderWrapper />
+                <Routes>
+                    <Route path="/home" element={
+                        <PrivateRoute>
+                            <Home />
+                        </PrivateRoute>
+                    } />
 
-                <Route path="/sem-acesso" element={<ErroSemAcesso />} />
-                <Route path="/*" element={<Erro404 />} />
-            </Routes>
+                    <Route path="/usuarios" element={
+                        <PrivateRoute>
+                            <ListaUsuario />
+                        </PrivateRoute>
+                    } />
+                    <Route path="/fretes" element={
+                        <PrivateRoute>
+                            <ListaFretes />
+                        </PrivateRoute>
+                    } />
+                    <Route path="/empresas" element={
+                        <PrivateRoute>
+                            <ListaEmpresa />
+                        </PrivateRoute>
+                    } />
+
+                    <Route path="/" element={<Login />} />
+
+                    <Route path="/sem-acesso" element={<ErroSemAcesso />} />
+                    <Route path="*" element={<Erro404 />} />
+
+                </Routes>
+            </AuthProvider>
         </BrowserRouter>
     );
 }

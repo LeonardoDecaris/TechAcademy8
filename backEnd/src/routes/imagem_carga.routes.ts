@@ -4,7 +4,6 @@ import { authMiddleware } from '../middleware/authMiddleware';
 import { uploadSingleImage } from '../middleware/uploadMiddleware';
 
 const router = Router();
-
 router.post('/imgCarga', authMiddleware, uploadSingleImage('imgUrl'), createImagemCarga);
 router.get('/imgCarga', authMiddleware, getAllImagensCarga);
 router.get('/imgCarga/:id', authMiddleware, getImagemCargaById);

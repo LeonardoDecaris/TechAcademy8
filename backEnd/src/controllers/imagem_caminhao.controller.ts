@@ -65,7 +65,6 @@ export const updateImagemVeiculo = async (req: Request, res: Response) => {
             }
             imgUrl = `uploads/${req.file.filename}`;
         }
-
         await imagem.update({ imgUrl });
         return res.status(200).json(imagem);
     } catch (error) {
@@ -91,7 +90,6 @@ export const deleteImagemVeiculo = async (req: Request, res: Response) => {
                 fs.unlinkSync(imagePath);
             }
         }
-
         await imagem.destroy();
         return res.status(204).send();
     } catch (error) {

@@ -41,7 +41,7 @@ const EditProfile = () => {
     const [modalImageVisible, setModalImageVisible] = useState(false);
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-    const imagemUrl = userData?.imagemUsuario?.imgUrl ? `${BASE_URL}${userData.imagemUsuario.imgUrl}` : '';
+    const imagemUrl = userData?.imagemUsuario?.imgUrl ? `${BASE_URL}api/${userData.imagemUsuario.imgUrl}` : '';
 
     const handlePickImage = useCallback(async () => {
         const uri = await pickOrTakeImage('gallery');
@@ -93,7 +93,6 @@ const EditProfile = () => {
             setValue(field as any, value, { shouldDirty: false });
         });
     }, [userData, setValue]);
-
 
     useEffect(() => {
         getUserData();

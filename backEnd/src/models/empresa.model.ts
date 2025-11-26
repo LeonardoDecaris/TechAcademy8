@@ -28,7 +28,7 @@ Empresa.init({
     },
     tipo: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
     avaliacao: {
         type: DataTypes.INTEGER,

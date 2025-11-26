@@ -10,6 +10,7 @@ class Usuario extends Model {
     email: string | undefined;
     cpf: string | undefined;
     cnh: string | undefined;
+    admin: boolean | undefined;
     datanascimento?: Date | undefined;
     imagemUsuario_id?: number | undefined;
 
@@ -54,6 +55,11 @@ Usuario.init({
     imagemUsuario_id: {
         type: DataTypes.INTEGER,
         allowNull: true,
+    },
+    admin: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
     },
 }, {
     sequelize,

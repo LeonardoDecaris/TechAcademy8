@@ -1,15 +1,16 @@
 import { Router } from 'express';
 import { createUsuario, getAllUsuarios, getUsuarioById, updateUsuario, deleteUsuario, requestPasswordReset, resetPassword } from '../controllers/usuario.controller';
-import { authMiddleware } from '../middleware/authMiddleware';
+import { requireAdmin, authMiddlewareUserOrAdmin } from '../middleware/authMiddleware';
 
 const router = Router();
 router.post('/usuario', createUsuario);
-router.get('/usuario', authMiddleware, getAllUsuarios);
-router.get('/usuario/:id', authMiddleware, getUsuarioById);
-router.put('/usuario/:id', authMiddleware, updateUsuario);
-router.delete('/usuario/:id', authMiddleware, deleteUsuario);
-
-router.post('/request-password-reset', requestPasswordReset);
 router.post('/reset-password', resetPassword);
+router.post('/request-password-reset', requestPasswordReset);
+
+router.get('/usuario', requireAdmin, getAllUsuarios);
+router.get('/usuario/:id', authMiddlewareUserOrAdmin({id_usuario: 'id'}), getUsuarioById);
+router.put('/usuario/:id', authMiddlewareUserOrAdmin({id_usuario: 'id'}), updateUsuario);
+router.delete('/usuario/:id', authMiddlewareUserOrAdmin({id_usuario: 'id'}), deleteUsuario);
+
 
 export default router;

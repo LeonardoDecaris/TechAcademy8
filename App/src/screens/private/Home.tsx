@@ -1,8 +1,8 @@
 import React, { useEffect, useCallback, useState, useMemo, memo } from 'react';
-import { Image, ScrollView, RefreshControl, TouchableOpacity, View, Text, ActivityIndicator } from 'react-native';
+import { Image, ScrollView, RefreshControl, TouchableOpacity, View, Text } from 'react-native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
 
 // --- Configuração e Tipos ---
@@ -17,9 +17,9 @@ import useGetVehicleData from '@/src/hooks/hookVehicle/useGetVehicleData';
 import useGetFreightConfirm from '@/src/hooks/hookFreight/useGetFreightComfirm';
 
 // --- Componentes ---
-import AcessoRapido from '@/src/components/base/AcessoRapido';
 import CardFreight from '@/src/components/cards/CardFreight';
 import VehicleCard from '@/src/components/cards/VehicleCard';
+import AcessoRapido from '@/src/components/base/AcessoRapido';
 import CardMyContract from '@/src/components/cards/CardMyContract';
 import ModalConfirmation from '@/src/components/modal/ModalConfirmation';
 import AlertNotification from '@/src/components/modal/AlertNotification';
@@ -39,12 +39,13 @@ const STYLES = {
 
 const Home = () => {
 
-    const { logout } = useAuth();
+const { logout} = useAuth();
     const navigation = useNavigation<NavigationProp>();
     const insets = useSafeAreaInsets();
 
     const { userData, getUserData, iniciasNomeUsuario, nomeAbreviado } = useGetUserData();
     const { getVehicleData, veiculo } = useGetVehicleData();
+
     const caminhoneiroId = veiculo?.id_caminhoneiro;
     const {
         getDados: getDadosFrete,
@@ -68,8 +69,8 @@ const Home = () => {
 
     const hasVehicle = Boolean(veiculo?.veiculo);
     const hasFrete = Boolean(dadosFrete?.id_frete);
-    const userImageUrl = userData?.imagemUsuario?.imgUrl ? `${BASE_URL}${userData.imagemUsuario.imgUrl}` : '';
-    const vehicleImageUrl = veiculo?.veiculo?.imagemVeiculo?.imgUrl ? `${BASE_URL}${veiculo.veiculo.imagemVeiculo.imgUrl}` : '';
+    const userImageUrl = userData?.imagemUsuario?.imgUrl ? `${BASE_URL}api/${userData.imagemUsuario.imgUrl}` : '';
+    const vehicleImageUrl = veiculo?.veiculo?.imagemVeiculo?.imgUrl ? `${BASE_URL}api/${veiculo.veiculo.imagemVeiculo.imgUrl}` : '';
 
     const fetchInitialData = useCallback(async () => {
         await Promise.all([
@@ -104,6 +105,7 @@ const Home = () => {
             setNoVehicleModalVisible(true);
         }
     }, [hasVehicle, navigation]);
+
     const handleNavigateToDetailsEnvio = useCallback(() => {
         if (hasFrete) {
             navigation.navigate('DetailsEnvio');
@@ -148,7 +150,7 @@ const Home = () => {
                             )}
                         </TouchableOpacity>
                         <Text className={STYLES.greetingText}>
-                            Olá, {nomeAbreviado ?? 'Usuário'}!
+                            Olá, {nomeAbreviado ?? 'Usuário'}! 
                         </Text>
                     </View>
                     <TouchableOpacity onPress={() => setLogoutModalVisible(true)} accessibilityLabel="Sair da conta">

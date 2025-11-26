@@ -6,6 +6,11 @@ import { RootStackParamList } from '@/src/navigation/Routes';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
+import CardCargo from '@/src/components/cards/CardCargo';
+import useFreight from '@/src/hooks/hookFreight/useFreight';
+import { calculateFreightDistance, useGeoLocation } from '@/src/hooks/geolocalizacao/geoLocalizacao';
+
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Freight'>;
 type ApiFreight = { [key: string]: any };
 interface FreightItem {
     id: string;
@@ -23,12 +28,6 @@ interface FreightItem {
     distancia?: number;
     [key: string]: any;
 }
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Freight'>;
-
-import useFreight from '@/src/hooks/hookFreight/useFreight';
-import { calculateFreightDistance, useGeoLocation } from '@/src/hooks/geolocalizacao/geoLocalizacao';
-
-import CardCargo from '@/src/components/cards/CardCargo';
 
 const STYLES = {
     containerBase: 'flex-1 bg-white',
@@ -49,6 +48,7 @@ const STYLES = {
     loadingContainer: 'flex-1 justify-center items-center',
     loadingText: 'mt-2 text-gray-600',
 };
+
 const RADIUS_OPTIONS: (number | null)[] = [null, 50, 100, 200];
 const COMPLETED_STATUS_ID = 5;
 
@@ -106,6 +106,7 @@ interface FilterControlsProps {
     onToggleSort: () => void;
     onToggleRadius: () => void;
 }
+
 const FilterControls = memo(({ locLoading, sortNearest, radiusKm, onUpdateLocation, onToggleSort, onToggleRadius }: FilterControlsProps) => (
     <View className={STYLES.locationBar}>
         <Pressable onPress={onUpdateLocation} disabled={locLoading} className={STYLES.smallBtn}>

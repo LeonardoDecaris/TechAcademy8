@@ -55,7 +55,7 @@ function useEditarUsuario() {
       setNotificationVisible(true);
 
       try {
-        await http.put(`usuario/${userId}`, {
+        await http.put(`api/usuario/${userId}`, {
           nome: data.nome,
           cpf: data.cpf,
           email: data.email,

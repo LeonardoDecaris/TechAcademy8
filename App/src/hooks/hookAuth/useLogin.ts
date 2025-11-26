@@ -65,7 +65,7 @@ function useLogin() {
 			}
 
 			try {
-				const response = await http.post("login", {
+				const response = await http.post("api/login", {
 					email: data.email,
 					password: data.password,
 				});
@@ -90,7 +90,9 @@ function useLogin() {
 				setSuccessVisible(false);
 				setTimeout(() => {
 					setSuccess("error");
-					if (attempts >= 5) {
+					if (error?.message === "Network Error") {
+						setMensage("Erro de rede. Verifique o IP do dispositivo e sua conexão.");
+					} else if (attempts >= 5) {
 						const until = Date.now() + 1 * 60 * 1000;
 						setLockUntil(until);
 						setMensage("Muitas tentativas de login. Tente novamente em 1 minuto.");
@@ -100,8 +102,6 @@ function useLogin() {
 					}
 					setSuccessVisible(true);
 				}, 300);
-
-				console.log("Login error:", error);
 			} finally {
 				setDisabled(false);
 			}

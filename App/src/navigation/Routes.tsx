@@ -2,6 +2,7 @@ import React from "react";
 import { StatusBar } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
+import PrivateRouteAdmin from "./PrivateRoutesAdmin";
 
 // Private routes and tabs
 import PrivateRoutes from "./PrivateRoutes";
@@ -22,6 +23,7 @@ import DetailsEnvio from "../screens/private/DetailsEnvio";
 import EditVehicle from "../screens/private/EditVehicle";
 import EditProfile from "../screens/private/EditProfile";
 import MyVehicle from "../screens/private/MyVehicle";
+import Admin from "../screens/admin/Admin";
 
 export type RootStackParamList = {
   ForgotPassword: { email: string; cpf: string; token?: string };
@@ -54,6 +56,7 @@ export type RootStackParamList = {
     };
   };
 
+  Admin: undefined;
   RegisterVehicle: undefined;
   DetailsVehicle: undefined;
   DetailsEnvio: undefined;
@@ -102,6 +105,10 @@ function Routes() {
 
         <Stack.Screen name="EditVehicle" options={{ headerTitle: "Editar Veículo", headerTitleAlign: "center", headerBackVisible: true }}>
           {() => <PrivateRoutes><EditVehicle /></PrivateRoutes>}
+        </Stack.Screen>
+
+        <Stack.Screen name="Admin" options={{ headerTitle: "Admin", headerTitleAlign: "center", headerBackVisible: true }}>
+          {() => <PrivateRouteAdmin><Admin /></PrivateRouteAdmin>}
         </Stack.Screen>
 
         <Stack.Screen name="NewPassword" component={NewPassword} options={{ headerTitle: "Nova Senha", headerTitleAlign: "center", headerBackVisible: true }} />

@@ -30,8 +30,8 @@ const Profile = () => {
 	const insets = useSafeAreaInsets();
 	const containerStyle = useMemo(() => ({ flex: 1, backgroundColor: '#FFFFFF', paddingHorizontal: 10, paddingTop: insets.top + 10 }), [insets.top]);
 
-	const { logout } = useAuth();
-	const navigation = useNavigation<NavigationProp>()
+	const { logout, userAdmin } = useAuth();
+	const navigation = useNavigation<NavigationProp>();
 
 	const { deleteUsuario } = useDeleteUsuario();
 	const [loggingOut, setLoggingOut] = useState(false);
@@ -43,12 +43,13 @@ const Profile = () => {
 	const goMyVehicle = useCallback(() => navigation.navigate('MyVehicle'), [navigation]);
 	const goEditProfile = useCallback(() => navigation.navigate('EditProfile'), [navigation]);
 	const goRegisterVehicle = useCallback(() => navigation.navigate('RegisterVehicle'), [navigation]);
+	const goAdmin = useCallback(() => navigation.navigate('Admin'), [navigation]);
 
 	const { getVehicleData, veiculo } = useGetVehicleData();
 	const { userData, iniciasNomeUsuario, nomeAbreviado, getUserData } = useGetUserData();
 
 	const hasVehicle = Boolean(veiculo?.veiculo);
-	const imagemUrl = userData?.imagemUsuario?.imgUrl ? `${BASE_URL}${userData.imagemUsuario.imgUrl}` : '';
+	const imagemUrl = userData?.imagemUsuario?.imgUrl ? `${BASE_URL}api/${userData.imagemUsuario.imgUrl}` : '';
 
 	const handleConfirmLogout = useCallback(async () => {
 		setLoggingOut(true);
@@ -101,6 +102,9 @@ const Profile = () => {
 						<AcessoRapidoPerfil titulo='Cadastrar veiculo' tipo='truck' onPress={goRegisterVehicle} />
 					)}
 					<AcessoRapidoPerfil titulo='Cancelar meu Cadastro' loginOut tipo='user-edit' onPress={() => setDeletingAccount(true)} />
+					{userAdmin === true && (
+						<AcessoRapidoPerfil titulo='Area do admin' tipo='' onPress={goAdmin} />
+					)}
 				</View>
 
 				<Text className={sectionTitleStyle}>Funcionamento do sistema</Text>
