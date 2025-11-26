@@ -9,6 +9,7 @@ interface empresaData {
     nome: string;
     cnpj: string;
     avaliacao?: number;
+    tipo: string;
     localidade: string;
 }
 
@@ -22,6 +23,7 @@ function useHookPostEmpresa() {
             await http.post("api/empresa", {
                 nome: data.nome,
                 cnpj: data.cnpj,
+                tipo: data.tipo,
                 avaliacao: data.avaliacao,
                 localidade: data.localidade,
             });
@@ -50,6 +52,9 @@ function useHookPostEmpresa() {
         },
         avaliacao: {
             required: "A avaliação é obrigatória.",
+        },
+        tipo: {
+            required: "O tipo é obrigatório.",
         },
     };
 

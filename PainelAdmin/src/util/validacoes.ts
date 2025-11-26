@@ -130,3 +130,64 @@ export function validarPassword(senha: string): string | true {
   
   return true;
 }
+
+/**
+ * Valida o CNPJ do usuário.
+ * @param cnpj CNPJ do usuário
+ * @returns Mensagem de erro ou true se válido
+ */
+export function validarCNPJ(cnpj: string): string | true {
+  if (!cnpj) return "CNPJ obrigatório";
+
+  const cleanedCNPJ = cnpj.replace(/[^\d]/g, '');
+  if (cleanedCNPJ.length !== 14) return "Deve ter exatamente 14 dígitos";
+
+  const invalidSequences = [
+    '00000000000000', '11111111111111', '22222222222222', '33333333333333',
+    '44444444444444', '55555555555555', '66666666666666', '77777777777777',
+    '88888888888888', '99999999999999'
+  ];
+  if (invalidSequences.includes(cleanedCNPJ)) return "CNPJ inválido";
+
+  if (!/^\d+$/.test(cleanedCNPJ)) return "CNPJ deve conter apenas números";
+
+  let tamanho = cleanedCNPJ.length - 2;
+  let numeros = cleanedCNPJ.substring(0, tamanho);
+  let digitos = cleanedCNPJ.substring(tamanho);
+
+  let soma = 0;
+  let pos = tamanho - 7;
+  for (let i = tamanho; i >= 1; i--) {
+    soma += Number(numeros.charAt(tamanho - i)) * pos--;
+    if (pos < 2) pos = 9;
+  }
+  let resultado = soma % 11 < 2 ? 0 : 11 - (soma % 11);
+  if (resultado !== Number(digitos.charAt(0))) return "CNPJ inválido (primeiro dígito verificador)";
+
+  tamanho = tamanho + 1;
+  numeros = cleanedCNPJ.substring(0, tamanho);
+  soma = 0;
+  pos = tamanho - 7;
+  for (let i = tamanho; i >= 1; i--) {
+    soma += Number(numeros.charAt(tamanho - i)) * pos--;
+    if (pos < 2) pos = 9;
+  }
+  resultado = soma % 11 < 2 ? 0 : 11 - (soma % 11);
+  if (resultado !== Number(digitos.charAt(1))) return "CNPJ inválido (segundo dígito verificador)";
+
+  return true;
+}
+ 
+/**
+ * Aplica máscara ao CNPJ.
+ * @param cnpj CNPJ sem máscara
+ * @returns CNPJ formatado
+ */
+export function mascaraCNPJ(cnpj: string): string {
+  const cleaned = cnpj.replace(/[^\d]/g, '').slice(0, 14);
+  return cleaned
+    .replace(/^(\d{2})(\d)/, '$1.$2')
+    .replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3')
+    .replace(/^(\d{2})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3/$4')
+    .replace(/^(\d{2})\.(\d{3})\.(\d{3})\/(\d{4})(\d)/, '$1.$2.$3/$4-$5');
+}
