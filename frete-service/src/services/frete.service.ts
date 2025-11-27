@@ -148,7 +148,7 @@ export async function createFreteService(payload: any, auth?: string) {
 
   // se vier como Pendente (1), agenda transição para "Não iniciado" (2)
   const status = frete.get("status_id") as number;
-  if (status === 1) {
+  if (status === 2) {
     await enqueuePendingToNaoIniciado(frete.get("id_frete") as number);
   }
 

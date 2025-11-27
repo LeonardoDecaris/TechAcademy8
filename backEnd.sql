@@ -95,7 +95,7 @@ CREATE TABLE `EMPRESA` (
   PRIMARY KEY (`id_empresa`),
   KEY `imagemEmpresa_id` (`imagemEmpresa_id`),
   CONSTRAINT `EMPRESA_ibfk_1` FOREIGN KEY (`imagemEmpresa_id`) REFERENCES `IMAGEM_EMPRESA` (`id_imagemEmpresa`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -104,6 +104,7 @@ CREATE TABLE `EMPRESA` (
 
 LOCK TABLES `EMPRESA` WRITE;
 /*!40000 ALTER TABLE `EMPRESA` DISABLE KEYS */;
+INSERT INTO `EMPRESA` VALUES (2,'Coamo Agroindustrial Cooperativa','76074051000143','Cooperativa',5,'Campo Mourão',1),(3,'Bunge Alimentos SA','00016970000180','Cooperativa',4,'Campo Mourão',2),(4,'Cargill Agrícola SA','60498706000148','Cooperativa',5,'Campo Mourão',3),(5,'ADM do Brasil Ltda','61186797000150','Cooperativa',5,'Campo Mourão',4),(6,'Copacol Cooperativa Agroindustrial','78609101000158','Cooperativa',5,'Campo Mourão',5),(7,'Seara Alimentos Ltda','02152374000121','Cooperativa',5,'Campo Mourão',6),(8,'JBS SA','02916265000160','Carga Viva',5,'Campo Mourão',7),(9,'BRF SA','01838723000127','Carga Viva',5,'Campo Mourão',8),(10,'Frimesa Cooperativa Central','79379491000109','Carga Viva',5,'Campo Mourão',9),(11,'Aurora Alimentos','82591373000160','Carga Viva',5,'Campo Mourão',10),(12,'Votorantim Cimentos SA','01832182000100','Cimento',5,'Campo Mourão',11),(13,'InterCement Brasil SA','61186797000150','Cimento',5,'Campo Mourão',12),(14,'LafargeHolcim Brasil SA','33646307000190','Cimento',5,'Campo Mourão',13),(15,'Mineração Belocal Ltda','03467321000100','Pedras',5,'Campo Mourão',14),(16,'Duratex SA','97837181000147','Madeira',5,'Campo Mourão',15),(17,'Klabin SA','89637490000145','Pallets',5,'Campo Mourão',16),(18,'Fertipar Fertilizantes do Paraná Ltda','76074051000143','Fertilizantes ',5,'Campo Mourão',17),(19,'Yara Brasil Fertilizantes SA','61186797000150','Fertilizantes ',5,'Campo Mourão',18),(20,'Raízen Energia SA','08493433000167','Combustível ',5,'Campo Mourão',19),(21,'Shell Brasil Petróleo Ltda','33000167000101','Combustível ',5,'Campo Mourão',20),(22,'John Deere Brasil Ltda','61186797000150','Tratores',5,'Campo Mourão',21),(23,'AGCO do Brasil Ltda','60498706000148','Tratores',5,'Campo Mourão',22),(24,'Tegma Gestão Logística SA','02351144000118','Cegonha',5,'Campo Mourão',23),(25,'Coteminas SA','16590234000100','Algodão',5,'Campo Mourão',24),(26,'Ambev SA','07526557000100','Bebidas',5,'Campo Mourão',25);
 /*!40000 ALTER TABLE `EMPRESA` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -333,4 +334,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-11-27 19:34:55
+-- Dump completed on 2025-11-27 20:13:02
