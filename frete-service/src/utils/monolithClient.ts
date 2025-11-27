@@ -1,7 +1,13 @@
 import axios from "axios";
 
+const MONOLITH_URL = process.env.MONOLITH_URL;
+if (!MONOLITH_URL) {
+  console.error("MONOLITH_URL não está definido nas variáveis de ambiente");
+  process.exit(1);
+}
+
 const client = axios.create({
-  baseURL: process.env.MONOLITH_URL || "http://backend:3000/api",
+  baseURL: MONOLITH_URL,
   timeout: 8000,
 });
 

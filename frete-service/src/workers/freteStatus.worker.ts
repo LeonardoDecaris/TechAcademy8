@@ -6,6 +6,9 @@ import Status from "../models/status.model"; // <-- import
 const connection = { url: process.env.REDIS_URL || "redis://redis:6379" };
 
 export function startFreteStatusWorker() {
+
+// Subscriber - Worker for frete status approval
+
   const worker = new Worker(
     "frete-status-approver",
     async (job) => {
