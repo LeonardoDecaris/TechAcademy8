@@ -30,14 +30,14 @@ function useIniciarRota() {
 
         try {
             await http.put(`fretesApi/fretes/${id}`, {
-                status_id: 2,
+                status_id: 4,
                 data_saida: new Date().toISOString(),
             });
 
             setSuccessVisible(false);
             setTimeout(() => {
                 setSuccess("success");
-                setMensage("Frete confirmado com sucesso");
+                setMensage("Rota iniciadas com sucesso");
                 setSuccessVisible(true);
             }, 300);
 

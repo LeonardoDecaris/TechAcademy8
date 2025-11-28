@@ -12,9 +12,22 @@ import client from "../utils/monolithClient";
 import redis from "../config/redisClient";
 import { enqueuePendingToNaoIniciado } from "../queues/freteStatus.queue";
 
-const CARGAS_PATH = process.env.MONOLITH_CARGAS_PATH || "/carga";
-const EMPRESAS_PATH = process.env.MONOLITH_EMPRESAS_PATH || "/empresa";
-const CAMINHONEIROS_PATH = process.env.MONOLITH_CAMINHONEIROS_PATH || "/caminhoneiro";
+if (!process.env.MONOLITH_CARGAS_PATH) {
+  console.error("MONOLITH_CARGAS_PATH não está definido nas variáveis de ambiente");
+  process.exit(1);
+}
+if (!process.env.MONOLITH_EMPRESAS_PATH) {
+  console.error("MONOLITH_EMPRESAS_PATH não está definido nas variáveis de ambiente");
+  process.exit(1);
+}
+if (!process.env.MONOLITH_CAMINHONEIROS_PATH) {
+  console.error("MONOLITH_CAMINHONEIROS_PATH não está definido nas variáveis de ambiente");
+  process.exit(1);
+}
+
+const CARGAS_PATH = process.env.MONOLITH_CARGAS_PATH;
+const EMPRESAS_PATH = process.env.MONOLITH_EMPRESAS_PATH;
+const CAMINHONEIROS_PATH = process.env.MONOLITH_CAMINHONEIROS_PATH;
 
 /*
 * DESCRIÇÃO: Função para construir os headers de autenticação.
@@ -135,7 +148,7 @@ export async function createFreteService(payload: any, auth?: string) {
 
   // se vier como Pendente (1), agenda transição para "Não iniciado" (2)
   const status = frete.get("status_id") as number;
-  if (status === 1) {
+  if (status === 2) {
     await enqueuePendingToNaoIniciado(frete.get("id_frete") as number);
   }
 

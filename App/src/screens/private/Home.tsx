@@ -180,6 +180,7 @@ const { logout} = useAuth();
                     peso={dadosFrete?.carga?.peso || '0'}
                     destino={dadosFrete?.destino || 'Sem destino'}
                     progresso={dadosFrete?.status?.id_status || 0}
+                    status={dadosFrete?.status?.descricao || '-----'}
                     TypeButton={true}
                     onPress={handleNavigateToDetailsEnvio}
                 />

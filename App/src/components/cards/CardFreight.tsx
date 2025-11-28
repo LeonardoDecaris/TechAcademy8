@@ -5,6 +5,7 @@ import FontAwesome5 from '@expo/vector-icons/build/FontAwesome5';
 interface Props {
   tipo?: string;
   peso?: string | number;
+  status?: string;
   destino?: string;
   progresso?: number;          // pode ser 0–5 ou 0–100
   onPress?: () => void;
@@ -25,9 +26,9 @@ const ACTIVE_COLOR = '#00FF44';
 const INACTIVE_COLOR = '#989898';
 
 const normalizeLevel = (value: number) => {
-  if (value <= 5) return Math.max(0, Math.min(5, Math.round(value)));
+  if (value <= 6) return Math.max(0, Math.min(6, Math.round(value)));
 
-  return Math.max(0, Math.min(5, Math.round(value / 20)));
+  return Math.max(0, Math.min(6, Math.round(value / 20)));
 };
 
 const CardFreight = ({
@@ -36,6 +37,7 @@ const CardFreight = ({
   destino,
   progresso = 0,
   onPress,
+  status,
   TypeButton = false,
   testID
 }: Props) => {
@@ -68,10 +70,13 @@ const CardFreight = ({
         <FontAwesome5 name="truck" size={24} color="black" />
         <Text className={destinoStyle}>Destino: {destino ?? '--'}</Text>
       </View>
+      <View>
+        <Text className={destinoStyle}>Status: {status ?? '--'}</Text>
+      </View>
 
       <View className="w-full pt-5">
         <View className={markersRowStyle}>
-          {Array.from({ length: 5 }).map((_, i) => (
+          {Array.from({ length: 6 }).map((_, i) => (
             <FontAwesome5
               key={i}
               name="map-marker-alt"
@@ -83,7 +88,7 @@ const CardFreight = ({
 
         <View className={progressOuterStyle}>
           <View style={progressInnerRowStyle}>
-            {Array.from({ length: 5 }).map((_, i) => (
+            {Array.from({ length: 6 }).map((_, i) => (
               <View
                 key={i}
                 style={{

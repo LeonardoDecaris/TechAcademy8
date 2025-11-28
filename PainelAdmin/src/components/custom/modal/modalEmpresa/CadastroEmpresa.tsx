@@ -74,6 +74,16 @@ const CadastroEmpresa = ({ children, onUpdate }: AlertLogoutProps) => {
                         error={errors.localidade?.message}
                     />
                     <InputCustom
+                        name="tipo"
+                        label="Tipo"
+                        id="tipo"
+                        type="text"
+                        placeholder="Digite o tipo"
+                        control={control}
+                        rules={rules.tipo}  
+                        error={errors.tipo?.message}
+                    />
+                    <InputCustom
                         name="avaliacao"
                         label="Avaliação"
                         id="avaliacao"

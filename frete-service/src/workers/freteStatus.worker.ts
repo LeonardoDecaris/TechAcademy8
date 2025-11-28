@@ -6,6 +6,9 @@ import Status from "../models/status.model"; // <-- import
 const connection = { url: process.env.REDIS_URL || "redis://redis:6379" };
 
 export function startFreteStatusWorker() {
+
+// Subscriber - Worker for frete status approval
+
   const worker = new Worker(
     "frete-status-approver",
     async (job) => {
@@ -22,11 +25,11 @@ export function startFreteStatusWorker() {
 
         let status = frete.get("status_id") as number;
         console.log(`[Status Approver:] Current status`, { freteId, status });
-        if (status === 1) {
+        if (status === 2) {
             console.log(`[Status Approver:] Processing`, { freteId });
             await new Promise(r => setTimeout(r, 5000));
-            await frete.update({ status_id: 2 }, { transaction: tx });
-            status = 2;
+            await frete.update({ status_id: 3 }, { transaction: tx });
+            status = 3;
         } else {
             console.log(`[Status Approver:] Skipped`, { freteId, status });
         }

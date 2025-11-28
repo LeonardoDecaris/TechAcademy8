@@ -137,6 +137,7 @@ const DetailsEnvio = () => {
                     destino={dadosFrete?.destino}
                     peso={dadosFrete?.carga?.peso}
                     tipo={dadosFrete?.carga?.tipoCarga?.nome}
+                    status={dadosFrete?.status?.descricao}
                     progresso={dadosFrete?.status?.id_status}
                 />
 
@@ -153,7 +154,7 @@ const DetailsEnvio = () => {
                 </View>
 
                 <View className={actionRowStyle}>
-                    {dadosFrete?.status?.id_status === 1 ? (
+                    {dadosFrete?.status?.id_status === 2 ? (
                         <ButtonPadrao
                             title='Iniciar Percurso'
                             typeButton='aceite'

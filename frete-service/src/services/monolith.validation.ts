@@ -1,10 +1,23 @@
 import client from "../utils/monolithClient";
 import AppError from "../utils/AppError";
 
+if (!process.env.MONOLITH_CARGAS_PATH) {
+  console.error("MONOLITH_CARGAS_PATH não está definido nas variáveis de ambiente");
+  process.exit(1);
+}
+if (!process.env.MONOLITH_EMPRESAS_PATH) {
+  console.error("MONOLITH_EMPRESAS_PATH não está definido nas variáveis de ambiente");
+  process.exit(1);
+}
+if (!process.env.MONOLITH_CAMINHONEIROS_PATH) {
+  console.error("MONOLITH_CAMINHONEIROS_PATH não está definido nas variáveis de ambiente");
+  process.exit(1);
+}
+
 const PATHS = {
-  carga: process.env.MONOLITH_CARGAS_PATH || "/carga",
-  empresa: process.env.MONOLITH_EMPRESAS_PATH || "/empresa",
-  caminhoneiro: process.env.MONOLITH_CAMINHONEIROS_PATH || "/caminhoneiro",
+  carga: process.env.MONOLITH_CARGAS_PATH,
+  empresa: process.env.MONOLITH_EMPRESAS_PATH,
+  caminhoneiro: process.env.MONOLITH_CAMINHONEIROS_PATH,
 };
 
 type Headers = Record<string, string> | undefined;
