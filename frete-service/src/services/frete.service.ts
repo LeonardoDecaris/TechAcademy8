@@ -239,6 +239,12 @@ export async function updateFreteService(id: number, payload: any, auth?: string
   if (!frete) throw new AppError(404, "Frete não encontrado");
   await frete.update(data);
 
+  // Nova verificação: aciona mensageria para fretes atualizados com status "Não iniciado" (2)
+  const status = frete.get("status_id") as number;
+  if (status === 2) {
+    await enqueuePendingToNaoIniciado(frete.get("id_frete") as number);
+  }
+
   // Invalida o cache da lista após update
   await redis.del("fretes:list");
   console.log(`[CACHE DEL] fretes:list - Cache da lista invalidado por UPDATE`);

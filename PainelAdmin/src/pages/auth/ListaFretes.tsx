@@ -10,10 +10,8 @@ import {
 } from "@/components/ui/table";
 
 import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
 import type { frete } from "@/interface/interfaceFretes";
 import useHookGetAllFretes from "@/hook/fretes/hookGetAllFretes";
-import CadastroUser from "@/components/custom/modal/modalUsuario/CadastroUser";
 import { AiOutlineDelete } from "react-icons/ai";
 import DeleteFretes from "@/components/custom/modal/modalFretes/DeleteFretes";
 
@@ -34,18 +32,27 @@ function ListaFretes() {
 	}, [fretesData]);
 
 	const pesquisarFrete = (data: { pesquisa: string }) => {
-		const termo = data.pesquisa.toLowerCase();
+        const termo = (data.pesquisa || "").toLowerCase();
 
-		if (!fretesData) return;
+        if (!fretesData) return;
 
-		const filtrados = fretesData.filter((item: frete) =>
-			item.empresa.nome.toLowerCase().includes(termo) ||
-			item.carga.nome.toLowerCase().includes(termo) ||
-			item.saida.toLowerCase().includes(termo) ||
-			item.destino.toLowerCase().includes(termo)
-		);
-		setFilteredFretes(filtrados);
-	};
+        const filtrados = fretesData.filter((item: frete) => {
+            const empresaNome = item.empresa?.nome?.toLowerCase() ?? "";
+            const cargaNome = item.carga?.nome?.toLowerCase() ?? "";
+            const saida = item.saida?.toLowerCase() ?? "";
+            const destino = item.destino?.toLowerCase() ?? "";
+            const tipoCargaNome = item.carga?.tipoCarga?.nome?.toLowerCase() ?? "";
+
+            return (
+                empresaNome.includes(termo) ||
+                cargaNome.includes(termo) ||
+                tipoCargaNome.includes(termo) ||
+                saida.includes(termo) ||
+                destino.includes(termo)
+            );
+        });
+        setFilteredFretes(filtrados);
+    };
 
 	return (
 		<main className="flex-1 m-auto h-screen py-5  mx-5">
@@ -99,14 +106,14 @@ function ListaFretes() {
 							filteredFretes.map((frete) => (
 								<TableRow key={frete.id_frete}>
 									<TableCell className="font-medium">{frete.id_frete}</TableCell>
-									<TableCell>{frete.carga.nome}</TableCell>
-									<TableCell>{frete.carga.tipoCarga.nome}</TableCell>
-									<TableCell>{frete.empresa.nome}</TableCell>
-									<TableCell>{frete.saida} ➝ {frete.destino}</TableCell>
-									<TableCell>R$ {frete.valor_frete}</TableCell>
-									<TableCell>R$ {frete.carga.valor_carga}</TableCell>
-									<TableCell>T {frete.carga.peso}</TableCell>
-									<TableCell>{frete.status.descricao}</TableCell>
+									<TableCell>{frete.carga?.nome ?? "—"}</TableCell>
+									<TableCell>{frete.carga?.tipoCarga?.nome ?? "—"}</TableCell>
+									<TableCell>{frete.empresa?.nome ?? "—"}</TableCell>
+									<TableCell>{frete.saida ?? "—"} ➝ {frete.destino ?? "—"}</TableCell>
+									<TableCell>R$ {frete.valor_frete ?? 0}</TableCell>
+									<TableCell>R$ {frete.carga?.valor_carga ?? 0}</TableCell>
+									<TableCell>T {frete.carga?.peso ?? 0}</TableCell>
+									<TableCell>{frete.status?.descricao ?? "—"}</TableCell>
 									<TableCell>{frete.caminhoneiro?.usuario?.nome ?? "Sem Caminhoneiro"}</TableCell>
 									<TableCell className="text-right">
 										<div className="flex justify-end items-center gap-2">

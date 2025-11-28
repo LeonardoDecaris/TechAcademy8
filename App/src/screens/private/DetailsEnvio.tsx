@@ -154,7 +154,7 @@ const DetailsEnvio = () => {
                 </View>
 
                 <View className={actionRowStyle}>
-                    {dadosFrete?.status?.id_status === 2 ? (
+                    {dadosFrete?.status?.id_status === 3 ? (
                         <ButtonPadrao
                             title='Iniciar Percurso'
                             typeButton='aceite'

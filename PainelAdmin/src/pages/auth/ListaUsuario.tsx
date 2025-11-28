@@ -100,12 +100,12 @@ function ListaUsuario() {
               </TableRow>
             ) : (
               filteredUsers.map((user) => (
-                <TableRow key={user.id_usuario}>
+                <TableRow key={user.id_usuario ?? 0}>
                   <TableCell className="font-medium">{user.id_usuario}</TableCell>
-                  <TableCell>{user.nome}</TableCell>
-                  <TableCell>{user.email}</TableCell>
-                  <TableCell>{formatCpf(user.cpf)}</TableCell>
-                  <TableCell>{user.cnh}</TableCell>
+                  <TableCell>{user.nome ?? "—"}</TableCell>
+                  <TableCell>{user.email ?? "—"}</TableCell>
+                  <TableCell>{formatCpf(user.cpf) ?? "—"}</TableCell>
+                  <TableCell>{user.cnh ?? "—"}</TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end items-center gap-2">
                       <EditarUsuario id={user.id_usuario} nome={user.nome} email={user.email} cpf={user.cpf} cnh={user.cnh} onUpdate={handleGetUser}>

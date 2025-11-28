@@ -50,7 +50,7 @@ const STYLES = {
 };
 
 const RADIUS_OPTIONS: (number | null)[] = [null, 50, 100, 200];
-const COMPLETED_STATUS_ID = 5;
+const COMPLETED_STATUS_ID = 6;
 
 /**
  * Transforma os dados brutos da API em um formato limpo para o componente.

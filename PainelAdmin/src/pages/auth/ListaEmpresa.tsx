@@ -95,12 +95,12 @@ function ListaEmpresa() {
 						) : (
 							filteredFretes.map((empresa) => (
 								<TableRow key={empresa.id_empresa}>
-									<TableCell className="font-medium">{empresa.id_empresa}</TableCell>
-									<TableCell>{empresa.nome}</TableCell>
-                                    <TableCell>{mascaraCNPJ(empresa.cnpj)}</TableCell>
-                                    <TableCell>{empresa.localidade}</TableCell>
-									<TableCell>{empresa.tipo}</TableCell>
-                                    <TableCell>{empresa.avaliacao || 'N/A'}</TableCell>
+									<TableCell className="font-medium">{empresa.id_empresa ?? "--"}</TableCell>
+									<TableCell>{empresa.nome ?? "--"}</TableCell>
+									<TableCell>{mascaraCNPJ(empresa.cnpj ?? "--")}</TableCell>
+									<TableCell>{empresa.localidade ?? "--"}</TableCell>
+									<TableCell>{empresa.tipo ?? "--"}</TableCell>
+									<TableCell>{empresa.avaliacao ?? "N/A"}</TableCell>
 									<TableCell className="text-right">
 										<div className="flex justify-end items-center gap-2">
 											<DeleteFretes onUpdate={handleGetAllEmpresas} idFretes={empresa.id_empresa}>
