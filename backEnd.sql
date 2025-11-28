@@ -1,8 +1,8 @@
 -- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
--- Host: localhost    Database: tech_Academy7
+-- Host: localhost    Database: backEnd-db
 -- ------------------------------------------------------
--- Server version	8.0.43
+-- Server version	8.0.44
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -29,9 +29,9 @@ CREATE TABLE `CAMINHONEIRO` (
   PRIMARY KEY (`id_caminhoneiro`),
   KEY `usuario_id` (`usuario_id`),
   KEY `veiculo_id` (`veiculo_id`),
-  CONSTRAINT `CAMINHONEIRO_ibfk_3` FOREIGN KEY (`usuario_id`) REFERENCES `USUARIO` (`id_usuario`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `CAMINHONEIRO_ibfk_4` FOREIGN KEY (`veiculo_id`) REFERENCES `VEICULO` (`id_veiculo`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `CAMINHONEIRO_ibfk_5` FOREIGN KEY (`usuario_id`) REFERENCES `USUARIO` (`id_usuario`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `CAMINHONEIRO_ibfk_6` FOREIGN KEY (`veiculo_id`) REFERENCES `VEICULO` (`id_veiculo`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,7 @@ CREATE TABLE `CAMINHONEIRO` (
 
 LOCK TABLES `CAMINHONEIRO` WRITE;
 /*!40000 ALTER TABLE `CAMINHONEIRO` DISABLE KEYS */;
-INSERT INTO `CAMINHONEIRO` VALUES (1,3,1);
+INSERT INTO `CAMINHONEIRO` VALUES (1,3,1),(2,4,NULL);
 /*!40000 ALTER TABLE `CAMINHONEIRO` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -73,7 +73,7 @@ CREATE TABLE `CARGA` (
 
 LOCK TABLES `CARGA` WRITE;
 /*!40000 ALTER TABLE `CARGA` DISABLE KEYS */;
-INSERT INTO `CARGA` VALUES (26,'Carga de grãos','Carga de grãos para exportação, composta por soja selecionada, acondicionada em silos herméticos, destinada ao porto de Paranaguá para embarque internacional. Produto com certificação de origem e rastreabilidade.',1,5000,4,1),(27,'Carga de grãos','Remessa de milho de alta qualidade, colhido em Campo Mourão, transportado em caminhão graneleiro, com destino a indústria de alimentos para produção de amido e derivados.',1,5000,4,1),(28,'Carga de grãos','Carga de trigo premium, ensacado e paletizado, destinada à moagem em moinhos de Ponta Grossa, com controle de umidade e laudo fitossanitário.',1,5000,4,1),(29,'Carga de grãos','Frete de feijão carioca, colhido em Apucarana, para distribuição em supermercados da região metropolitana de Curitiba. Produto embalado a vácuo.',1,5000,4,1),(30,'Carga de grãos','Transporte de arroz integral, produzido em União da Vitória, com destino a exportação via Porto de Paranaguá. Carga rastreada e segurada.',1,5000,4,1),(31,'Carga viva','Transporte frigorificado de suínos vivos, com controle de temperatura e bem-estar animal, para abate em frigorífico certificado. Veículo equipado com sistema de ventilação.',1,5000,8,8),(32,'Carga viva','Remessa de bovinos de raça nelore, embarcados em caminhão boiadeiro, com destino a fazenda de engorda em Cascavel. Documentação sanitária em dia.',1,5000,8,8),(33,'Carga viva','Transporte de aves vivas, galinhas poedeiras, para granja em Maringá. Carga monitorada por GPS e equipe especializada.',1,5000,8,8),(34,'Carga viva','Frete de peixes tilápia, acondicionados em tanques oxigenados, para indústria de processamento em Foz do Iguaçu. Garantia de qualidade e frescor.',1,5000,8,8),(35,'Carga viva','Transporte de ovinos, raça santa inês, para feira agropecuária em Londrina. Veículo adaptado para pequenos animais.',1,5000,8,8),(36,'Carga de cimento','Carga de cimento Portland ensacado, para obra de construção civil em Curitiba. Produto paletizado, com laudo de resistência e entrega programada.',1,5000,11,2),(37,'Carga de cimento','Remessa de cimento a granel, destinado à fábrica de pré-moldados em Ponta Grossa. Caminhão equipado com sistema de descarga pneumática.',1,5000,11,2),(38,'Carga de cimento','Transporte de cimento branco especial, para acabamento de obras residenciais em Maringá. Produto com certificação ISO.',1,5000,11,2),(39,'Carga de pedras','Frete de brita 1 e 2, extraída em pedreira de Campo Mourão, para pavimentação de rodovia estadual. Carga pesada, com controle de peso na origem.',1,5000,11,3),(40,'Carga de madeira','Transporte de madeira serrada de pinus, para indústria moveleira em Francisco Beltrão. Produto com selo de manejo sustentável.',1,5000,5,4),(41,'Carga de pallets','Remessa de pallets de madeira tratados, para centro de distribuição logístico em São José dos Pinhais. Produto certificado para exportação.',1,5000,2,5),(42,'Carga de fertilizantes','Carga de fertilizante NPK, ensacado e paletizado, para revenda agrícola em Guarapuava. Produto com laudo de composição química.',1,5000,4,6),(43,'Carga de fertilizantes','Transporte de ureia granulada, para aplicação em lavoura de soja em Toledo. Carga protegida contra umidade.',1,5000,4,6),(44,'Carga de combustível','Frete de diesel S10, transportado em caminhão tanque, para abastecimento de frota agrícola em Umuarama. Carga com seguro ambiental.',1,5000,7,7),(45,'Carga de combustível','Transporte de etanol hidratado, para posto de combustível em Colombo. Veículo com sistema de contenção de vazamentos.',1,5000,7,7),(46,'Carga de tratores','Remessa de trator John Deere modelo 6110, novo, para concessionária em Pato Branco. Carga com escolta e seguro total.',1,5000,6,9),(47,'Carga de tratores','Transporte de trator Massey Ferguson modelo MF 4275, revisado, para fazenda em Telêmaco Borba. Carga paletizada e amarrada.',1,5000,6,9),(48,'Carga de cegonha','Carga de veículos leves, modelo sedan, para concessionária em Paranavaí. Transporte tipo cegonha, com rastreamento em tempo real.',1,5000,3,10),(49,'Carga de algodão','Frete de fardos de algodão, colhidos em Guaíra, para indústria têxtil em Jacarezinho. Produto embalado e protegido contra umidade.',1,5000,9,11),(50,'Carga de bebidas','Transporte de bebidas refrigerantes e água mineral, para distribuidora em Assis Chateaubriand. Carga paletizada e refrigerada.',1,5000,10,12);
+INSERT INTO `CARGA` VALUES (26,'Carga de grãos','Carga de grãos para exportação, composta por soja selecionada, acondicionada em silos herméticos, destinada ao porto de Paranaguá para embarque internacional. Produto com certificação de origem e rastreabilidade.',10000,5000,4,1),(27,'Carga de grãos','Remessa de milho de alta qualidade, colhido em Campo Mourão, transportado em caminhão graneleiro, com destino a indústria de alimentos para produção de amido e derivados.',10000,5000,4,1),(28,'Carga de grãos','Carga de trigo premium, ensacado e paletizado, destinada à moagem em moinhos de Ponta Grossa, com controle de umidade e laudo fitossanitário.',10000,5000,4,1),(29,'Carga de grãos','Frete de feijão carioca, colhido em Apucarana, para distribuição em supermercados da região metropolitana de Curitiba. Produto embalado a vácuo.',10000,5000,4,1),(30,'Carga de grãos','Transporte de arroz integral, produzido em União da Vitória, com destino a exportação via Porto de Paranaguá. Carga rastreada e segurada.',10000,5000,4,1),(31,'Carga viva','Transporte frigorificado de suínos vivos, com controle de temperatura e bem-estar animal, para abate em frigorífico certificado. Veículo equipado com sistema de ventilação.',10000,5000,8,1),(32,'Carga viva','Remessa de bovinos de raça nelore, embarcados em caminhão boiadeiro, com destino a fazenda de engorda em Cascavel. Documentação sanitária em dia.',10000,6000,8,1),(33,'Carga viva','Transporte de aves vivas, galinhas poedeiras, para granja em Maringá. Carga monitorada por GPS e equipe especializada.',10000,6000,8,1),(34,'Carga viva','Frete de peixes tilápia, acondicionados em tanques oxigenados, para indústria de processamento em Foz do Iguaçu. Garantia de qualidade e frescor.',10000,6000,8,1),(35,'Carga viva','Transporte de ovinos, raça santa inês, para feira agropecuária em Londrina. Veículo adaptado para pequenos animais.',10000,6000,8,1),(36,'Carga de cimento','Carga de cimento Portland ensacado, para obra de construção civil em Curitiba. Produto paletizado, com laudo de resistência e entrega programada.',12000,7000,11,2),(37,'Carga de cimento','Remessa de cimento a granel, destinado à fábrica de pré-moldados em Ponta Grossa. Caminhão equipado com sistema de descarga pneumática.',12000,7000,11,2),(38,'Carga de cimento','Transporte de cimento branco especial, para acabamento de obras residenciais em Maringá. Produto com certificação ISO.',12000,7000,11,2),(39,'Carga de pedras','Frete de brita 1 e 2, extraída em pedreira de Campo Mourão, para pavimentação de rodovia estadual. Carga pesada, com controle de peso na origem.',12000,7000,11,3),(40,'Carga de madeira','Transporte de madeira serrada de pinus, para indústria moveleira em Francisco Beltrão. Produto com selo de manejo sustentável.',10000,6500,5,4),(41,'Carga de pallets','Remessa de pallets de madeira tratados, para centro de distribuição logístico em São José dos Pinhais. Produto certificado para exportação.',10000,8000,2,5),(42,'Carga de fertilizantes','Carga de fertilizante NPK, ensacado e paletizado, para revenda agrícola em Guarapuava. Produto com laudo de composição química.',10000,7000,4,6),(43,'Carga de fertilizantes','Transporte de ureia granulada, para aplicação em lavoura de soja em Toledo. Carga protegida contra umidade.',10000,7000,4,6),(44,'Carga de combustível','Frete de diesel S10, transportado em caminhão tanque, para abastecimento de frota agrícola em Umuarama. Carga com seguro ambiental.',8000,5000,7,7),(45,'Carga de combustível','Transporte de etanol hidratado, para posto de combustível em Colombo. Veículo com sistema de contenção de vazamentos.',8000,5000,7,7),(46,'Carga de tratores','Remessa de trator John Deere modelo 6110, novo, para concessionária em Pato Branco. Carga com escolta e seguro total.',15000,15000,6,9),(47,'Carga de tratores','Transporte de trator Massey Ferguson modelo MF 4275, revisado, para fazenda em Telêmaco Borba. Carga paletizada e amarrada.',15000,15000,6,9),(48,'Carga de cegonha','Carga de veículos leves, modelo sedan, para concessionária em Paranavaí. Transporte tipo cegonha, com rastreamento em tempo real.',7800,10000,3,10),(49,'Carga de algodão','Frete de fardos de algodão, colhidos em Guaíra, para indústria têxtil em Jacarezinho. Produto embalado e protegido contra umidade.',7800,10000,9,11),(50,'Carga de bebidas','Transporte de bebidas refrigerantes e água mineral, para distribuidora em Assis Chateaubriand. Carga paletizada e refrigerada.',7800,10000,10,12);
 /*!40000 ALTER TABLE `CARGA` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -106,48 +106,6 @@ LOCK TABLES `EMPRESA` WRITE;
 /*!40000 ALTER TABLE `EMPRESA` DISABLE KEYS */;
 INSERT INTO `EMPRESA` VALUES (2,'Coamo Agroindustrial Cooperativa','76074051000143','Cooperativa',5,'Campo Mourão',1),(3,'Bunge Alimentos SA','00016970000180','Cooperativa',4,'Campo Mourão',2),(4,'Cargill Agrícola SA','60498706000148','Cooperativa',5,'Campo Mourão',3),(5,'ADM do Brasil Ltda','61186797000150','Cooperativa',5,'Campo Mourão',4),(6,'Copacol Cooperativa Agroindustrial','78609101000158','Cooperativa',5,'Campo Mourão',5),(7,'Seara Alimentos Ltda','02152374000121','Cooperativa',5,'Campo Mourão',6),(8,'JBS SA','02916265000160','Carga Viva',5,'Campo Mourão',7),(9,'BRF SA','01838723000127','Carga Viva',5,'Campo Mourão',8),(10,'Frimesa Cooperativa Central','79379491000109','Carga Viva',5,'Campo Mourão',9),(11,'Aurora Alimentos','82591373000160','Carga Viva',5,'Campo Mourão',10),(12,'Votorantim Cimentos SA','01832182000100','Cimento',5,'Campo Mourão',11),(13,'InterCement Brasil SA','61186797000150','Cimento',5,'Campo Mourão',12),(14,'LafargeHolcim Brasil SA','33646307000190','Cimento',5,'Campo Mourão',13),(15,'Mineração Belocal Ltda','03467321000100','Pedras',5,'Campo Mourão',14),(16,'Duratex SA','97837181000147','Madeira',5,'Campo Mourão',15),(17,'Klabin SA','89637490000145','Pallets',5,'Campo Mourão',16),(18,'Fertipar Fertilizantes do Paraná Ltda','76074051000143','Fertilizantes ',5,'Campo Mourão',17),(19,'Yara Brasil Fertilizantes SA','61186797000150','Fertilizantes ',5,'Campo Mourão',18),(20,'Raízen Energia SA','08493433000167','Combustível ',5,'Campo Mourão',19),(21,'Shell Brasil Petróleo Ltda','33000167000101','Combustível ',5,'Campo Mourão',20),(22,'John Deere Brasil Ltda','61186797000150','Tratores',5,'Campo Mourão',21),(23,'AGCO do Brasil Ltda','60498706000148','Tratores',5,'Campo Mourão',22),(24,'Tegma Gestão Logística SA','02351144000118','Cegonha',5,'Campo Mourão',23),(25,'Coteminas SA','16590234000100','Algodão',5,'Campo Mourão',24),(26,'Ambev SA','07526557000100','Bebidas',5,'Campo Mourão',25);
 /*!40000 ALTER TABLE `EMPRESA` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `FRETE`
---
-
-DROP TABLE IF EXISTS `FRETE`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `FRETE` (
-  `id_frete` int NOT NULL AUTO_INCREMENT,
-  `saida` varchar(255) DEFAULT NULL,
-  `destino` varchar(255) DEFAULT NULL,
-  `valor_frete` int DEFAULT NULL,
-  `data_saida` datetime DEFAULT NULL,
-  `data_chegada` datetime DEFAULT NULL,
-  `prazo` int DEFAULT NULL,
-  `distancia` int DEFAULT NULL,
-  `status_id` int DEFAULT NULL,
-  `caminhoneiro_id` int DEFAULT NULL,
-  `carga_id` int DEFAULT NULL,
-  `empresa_id` int DEFAULT NULL,
-  PRIMARY KEY (`id_frete`),
-  KEY `status_id` (`status_id`),
-  KEY `caminhoneiro_id` (`caminhoneiro_id`),
-  KEY `carga_id` (`carga_id`),
-  KEY `empresa_id` (`empresa_id`),
-  CONSTRAINT `FRETE_ibfk_5` FOREIGN KEY (`status_id`) REFERENCES `STATUS` (`id_status`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `FRETE_ibfk_6` FOREIGN KEY (`caminhoneiro_id`) REFERENCES `CAMINHONEIRO` (`id_caminhoneiro`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `FRETE_ibfk_7` FOREIGN KEY (`carga_id`) REFERENCES `CARGA` (`id_carga`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `FRETE_ibfk_8` FOREIGN KEY (`empresa_id`) REFERENCES `EMPRESA` (`id_empresa`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `FRETE`
---
-
-LOCK TABLES `FRETE` WRITE;
-/*!40000 ALTER TABLE `FRETE` DISABLE KEYS */;
-INSERT INTO `FRETE` VALUES (61,'Campo Mourão','Curitiba',1850,NULL,NULL,3,410,1,NULL,26,2),(62,'Campo Mourão','Maringá',950,NULL,NULL,2,120,1,NULL,27,3),(63,'Campo Mourão','Ponta Grossa',2100,NULL,NULL,4,320,1,NULL,28,4),(64,'Campo Mourão','Cascavel',1300,NULL,NULL,2,180,1,NULL,29,5),(65,'Campo Mourão','Foz do Iguaçu',2600,NULL,NULL,5,480,1,NULL,30,6),(66,'Campo Mourão','Guarapuava',1100,NULL,NULL,2,150,1,NULL,31,7),(67,'Campo Mourão','Paranaguá',3200,NULL,NULL,6,520,1,NULL,32,8),(68,'Campo Mourão','São José dos Pinhais',1700,NULL,NULL,3,390,1,NULL,33,9),(69,'Campo Mourão','Colombo',1200,NULL,NULL,2,210,1,NULL,34,10),(70,'Campo Mourão','Campo Mourão',500,NULL,NULL,1,10,1,NULL,35,11),(71,'Campo Mourão','Toledo',1400,NULL,NULL,2,200,1,NULL,36,12),(72,'Campo Mourão','Apucarana',900,NULL,NULL,2,80,1,NULL,37,13),(73,'Campo Mourão','Arapongas',950,NULL,NULL,2,90,1,NULL,38,14),(74,'Campo Mourão','Umuarama',1600,NULL,NULL,3,250,1,NULL,39,15),(75,'Campo Mourão','Pato Branco',2300,NULL,NULL,5,470,1,NULL,40,16),(76,'Campo Mourão','Francisco Beltrão',2200,NULL,NULL,5,460,1,NULL,41,17),(77,'Campo Mourão','Cianorte',1050,NULL,NULL,2,130,1,NULL,42,18),(78,'Campo Mourão','Telêmaco Borba',1950,NULL,NULL,4,340,1,NULL,43,19),(79,'Campo Mourão','Medianeira',2500,NULL,NULL,5,490,1,NULL,44,20),(80,'Campo Mourão','Palmas',2400,NULL,NULL,5,480,1,1,45,21),(81,'Campo Mourão','Marechal Cândido Rondon',2100,NULL,NULL,4,350,1,NULL,46,22),(82,'Campo Mourão','Irati',1150,NULL,NULL,2,160,1,NULL,47,23),(83,'Campo Mourão','Jacarezinho',1750,NULL,NULL,3,280,1,NULL,48,24),(84,'Campo Mourão','União da Vitória',2250,NULL,NULL,4,370,1,NULL,49,25),(85,'Campo Mourão','Paranavaí',950,NULL,NULL,2,90,1,NULL,50,26);
-/*!40000 ALTER TABLE `FRETE` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -247,30 +205,6 @@ INSERT INTO `IMAGEM_VEICULO` VALUES (1,'uploads/1758842526222.png');
 UNLOCK TABLES;
 
 --
--- Table structure for table `STATUS`
---
-
-DROP TABLE IF EXISTS `STATUS`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `STATUS` (
-  `id_status` int NOT NULL AUTO_INCREMENT,
-  `nome` varchar(255) NOT NULL,
-  PRIMARY KEY (`id_status`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `STATUS`
---
-
-LOCK TABLES `STATUS` WRITE;
-/*!40000 ALTER TABLE `STATUS` DISABLE KEYS */;
-INSERT INTO `STATUS` VALUES (1,'Não alocado'),(2,'Não iniciado'),(3,'Em transporte'),(4,'Em rota de entrega'),(5,'Entregue');
-/*!40000 ALTER TABLE `STATUS` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `TIPO_CARGA`
 --
 
@@ -310,10 +244,11 @@ CREATE TABLE `USUARIO` (
   `cnh` varchar(255) NOT NULL,
   `datanascimento` datetime DEFAULT NULL,
   `imagemUsuario_id` int DEFAULT NULL,
+  `admin` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_usuario`),
   KEY `imagemUsuario_id` (`imagemUsuario_id`),
   CONSTRAINT `USUARIO_ibfk_1` FOREIGN KEY (`imagemUsuario_id`) REFERENCES `IMAGEM_USUARIO` (`id_imagem`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -322,7 +257,7 @@ CREATE TABLE `USUARIO` (
 
 LOCK TABLES `USUARIO` WRITE;
 /*!40000 ALTER TABLE `USUARIO` DISABLE KEYS */;
-INSERT INTO `USUARIO` VALUES (1,'$2b$10$i6Z1QU9B14pZZ/tRQEbrzO3J1wP3GbWbs0NyLrltq.KdphSJP.0hy','Leonardo Nunes Decaris','leonardodecaris@outlook.com','10765482967','E','2025-09-06 22:21:43',NULL),(2,'$2b$10$1e8KW.St7OPaYMewl29TNuvxrut.mn2laYL6nS8JNXW5qWQQOEVT2','João da Silva','usuario@email.com','12345678900','E','2025-09-07 00:00:00',NULL),(3,'$2b$10$ym4gMvQlo1JD9UZqBFCwXu91fJ7nwBxZ6LV0NYbYqF.1LWuUfI1dK','Lucas Caravalho Pedrozo','lucaspedroozoo@hotmail.com','12105625967','D','2025-09-25 23:17:08',2);
+INSERT INTO `USUARIO` VALUES (1,'$2b$10$i6Z1QU9B14pZZ/tRQEbrzO3J1wP3GbWbs0NyLrltq.KdphSJP.0hy\r\n$2b$10$1e8KW.St7OPaYMewl29TNuvxrut.mn2laYL6nS8JNXW5qWQQOEVT2\r\n$2b$10$ym4gMvQlo1JD9UZqBFCwXu91fJ7nwBxZ6LV0NYbYqF.1LWuUfI1dK','Leonardo Nunes Decaris','leonardodecaris@outlook.com','10765482967','E','2025-09-06 22:21:43',NULL,0),(2,'$2b$10$WR4/W0vJiDnR4zIcEaKe6..tH7m7mw9ugLYV6Y/Mej39QXA33w86i','João da Silva','usuario@email.com','12345678900','E','2025-09-07 00:00:00',NULL,1),(3,'$2b$10$ym4gMvQlo1JD9UZqBFCwXu91fJ7nwBxZ6LV0NYbYqF.1LWuUfI1dK','Lucas Caravalho Pedrozo','lucaspedroozoo@hotmail.com','12105625967','D','2025-09-25 23:17:08',2,0),(4,'$2b$10$WR4/W0vJiDnR4zIcEaKe6..tH7m7mw9ugLYV6Y/Mej39QXA33w86i','João da Silva','usuario@email.com','66908315070','E',NULL,NULL,0);
 /*!40000 ALTER TABLE `USUARIO` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -372,8 +307,8 @@ CREATE TABLE `VEICULO_TIPO_CARGA` (
   PRIMARY KEY (`id`),
   KEY `tipoCarga_id` (`tipoCarga_id`),
   KEY `veiculo_id` (`veiculo_id`),
-  CONSTRAINT `VEICULO_TIPO_CARGA_ibfk_3` FOREIGN KEY (`tipoCarga_id`) REFERENCES `TIPO_CARGA` (`id_tipo`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `VEICULO_TIPO_CARGA_ibfk_4` FOREIGN KEY (`veiculo_id`) REFERENCES `VEICULO` (`id_veiculo`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `VEICULO_TIPO_CARGA_ibfk_5` FOREIGN KEY (`tipoCarga_id`) REFERENCES `TIPO_CARGA` (`id_tipo`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `VEICULO_TIPO_CARGA_ibfk_6` FOREIGN KEY (`veiculo_id`) REFERENCES `VEICULO` (`id_veiculo`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -387,7 +322,7 @@ LOCK TABLES `VEICULO_TIPO_CARGA` WRITE;
 UNLOCK TABLES;
 
 --
--- Dumping routines for database 'tech_Academy7'
+-- Dumping routines for database 'backEnd-db'
 --
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -399,4 +334,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-09-25 20:57:20
+-- Dump completed on 2025-11-27 20:13:02

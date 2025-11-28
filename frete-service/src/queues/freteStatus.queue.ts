@@ -2,6 +2,8 @@ import { Queue } from "bullmq";
 
 const connection = { url: process.env.REDIS_URL || "redis://redis:6379" };
 
+// Publisher queue for frete status approval
+
 export const freteStatusQueue = new Queue("frete-status-approver", { connection });
 
 export async function enqueuePendingToNaoIniciado(freteId: number, delayMs?: number) {

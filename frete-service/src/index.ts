@@ -2,7 +2,11 @@ import sequelize from "./config/database";
 import dotenv from 'dotenv';
 dotenv.config();
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
+if (!PORT) {
+  console.error("PORT não está definido nas variáveis de ambiente");
+  process.exit(1);
+}
 
 import { startFreteStatusWorker } from "./workers/freteStatus.worker";
 import "./config/redisClient";
@@ -27,7 +31,7 @@ async function waitForDb(retries = 10, delayMs = 3000) {
     await sequelize.sync();
     console.log("Frete-Service Database synchronized");
     const app = (await import("./app")).default;
-    const port = process.env.PORT || 3000;
+    const port = process.env.PORT;
     app.listen(port, () => console.log(`Frete-Service Server is running on port ${PORT}`));
   } catch (e:any) {
     console.error("Startup error:", e.message);
