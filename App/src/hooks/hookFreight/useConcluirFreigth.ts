@@ -29,7 +29,7 @@ function useConcluirFreight() {
 
         try {
             await http.put(`fretesApi/fretes/${id}`, {
-                status_id: 5,
+                status_id: 6,
                 caminhoneiro_id: null,
                 data_chegada: new Date().toISOString(),
             });
