@@ -12,7 +12,6 @@ import {
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import type { empresa } from "@/hook/empresa/hookGetAllEmpresa";
-import CadastroUser from "@/components/custom/modal/modalUsuario/CadastroUser";
 import { AiOutlineDelete } from "react-icons/ai";
 import DeleteFretes from "@/components/custom/modal/modalFretes/DeleteFretes";
 import useHookGetAllEmpresa from "@/hook/empresa/hookGetAllEmpresa";
@@ -47,7 +46,7 @@ function ListaEmpresa() {
 	};
 
 	return (
-		<main className="flex-1 m-auto h-screen max-w-[1400px] py-5 ">
+		<main className="flex-1 m-auto h-screen py-5  mx-5">
 			<h1 className="text-black text-center text-3xl font-bold mb-6">Lista de Empresas</h1>
 
 			<form onSubmit={handleSubmit(pesquisarFrete)} className="w-full justify-center flex mb-6 gap-4">
@@ -104,9 +103,6 @@ function ListaEmpresa() {
                                     <TableCell>{empresa.avaliacao || 'N/A'}</TableCell>
 									<TableCell className="text-right">
 										<div className="flex justify-end items-center gap-2">
-											<button className="bg-black text-white text-sm font-semibold rounded-sm px-2 py-1 cursor-pointer hover:bg-black/80 transition-colors">
-												Editar
-											</button>
 											<DeleteFretes onUpdate={handleGetAllEmpresas} idFretes={empresa.id_empresa}>
 												<button className="bg-red-500 text-sm text-white font-semibold rounded-sm px-2 py-1 cursor-pointer hover:bg-red-600 transition-colors">
 													<AiOutlineDelete size={24} />

@@ -54,7 +54,7 @@ function ListaUsuario() {
   }, [dataUser]);
 
   return (
-    <main className="flex-1 m-auto h-screen max-w-[1400px] py-5 ">
+    <main className="flex-1 m-auto h-screen py-5  mx-5 ">
       <h1 className="text-black text-center text-3xl font-bold mb-6">Controle de Usuários</h1>
 
       <form onSubmit={handleSubmit(pesquisarUsuario)} className="w-full justify-center flex mb-6 gap-4">
