@@ -36,7 +36,8 @@ function useConfirmFreight() {
 
         try {
             await http.put(`fretesApi/fretes/${id}`, {
-                caminhoneiro_id: idCaminhoneiro,
+                status_id: 2,
+                caminhoneiro_id: idCaminhoneiro,    
             });
 
             setSuccessVisible(false);

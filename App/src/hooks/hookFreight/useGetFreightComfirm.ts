@@ -43,7 +43,7 @@ interface carga {
 
 interface status {
   id_status: number;
-  nome: string;
+  descricao: string;
 }
 
 interface caminhoneiro {
